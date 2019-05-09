@@ -1,0 +1,11 @@
+fr:
+  period_range:
+    default_format:             Du %{from} au %{to} inclus
+    end_date_is_invalid:        Date de fin invalide
+    start_date_is_invalid:      Date de début invalide
+    start_is_greater_than_end:  Date de début supérieur à la date de fin
+    incomparable_error:         Les arguments ne sont pas comparables
+    must_implement_to_datetime: L'argument doit repondre a "to_datetime"
+  standard_period:
+    week:
+      default_format: Semaine %{week} de l'année %{year}

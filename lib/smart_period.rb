@@ -1,4 +1,7 @@
 require "smart_period/version"
+require "active_support/all"
+require "i18n"
+
 require_relative "smart_period/period_range.rb"
 require_relative "smart_period/day.rb"
 require_relative "smart_period/week.rb"
@@ -15,16 +18,16 @@ module SmartPeriod
   class << self
     %i(day week month quarter year).each do |period|
       define_method "last_#{period}" do
-        date = Time.zone.now.send(period == :day ? 'yesterday' : "last_#{period}")
+        date = (Time.zone || Time).now.send(period == :day ? 'yesterday' : "last_#{period}")
         Object.const_get("SmartPeriod::#{period.capitalize}").new(date)
       end
 
       define_method "this_#{period}" do
-        Object.const_get("SmartPeriod::#{period.capitalize}").new(Time.zone.now)
+        Object.const_get("SmartPeriod::#{period.capitalize}").new((Time.zone || Time).now)
       end
 
       define_method "next_#{period}" do
-        date = Time.zone.now.send(period == :day ? 'tomorrow' : "next_#{period}")
+        date = (Time.zone || Time).now.send(period == :day ? 'tomorrow' : "next_#{period}")
         Object.const_get("SmartPeriod::#{period.capitalize}").new(date)
       end
 

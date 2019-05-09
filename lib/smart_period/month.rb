@@ -1,9 +1,9 @@
 require_relative "standard_period.rb"
 require_relative "has_many.rb"
-require_relative "belongs_to.rb"
 require_relative "has_many/days.rb"
 require_relative "has_many/weeks.rb"
-require_relative "belongs_to/month.rb"
+require_relative "belongs_to.rb"
+require_relative "belongs_to/quarter.rb"
 require_relative "belongs_to/year.rb"
 
 class SmartPeriod::Month < SmartPeriod::StandardPeriod
@@ -17,8 +17,8 @@ class SmartPeriod::Month < SmartPeriod::StandardPeriod
     self.from.strftime(format)
   end
 
-  def to_s
-    self.strftime("%m/%Y")
+  def to_s(format: "%m/%Y")
+    self.strftime(format)
   end
 
   def i18n(format: '%B %Y')

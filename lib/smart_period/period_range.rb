@@ -5,6 +5,9 @@ require_relative "has_many/months.rb"
 require_relative "has_many/quarters.rb"
 require_relative "has_many/years.rb"
 
+I18n.load_path << 'locales/fr.yml'
+I18n.load_path << 'locales/en.yml'
+
 class SmartPeriod::PeriodRange < Range
   include Comparable
 
@@ -21,16 +24,16 @@ class SmartPeriod::PeriodRange < Range
     begin
       from = from.is_a?( DateTime ) ? from : from.to_time.to_datetime.beginning_of_day
     rescue
-      raise ::ArgumentError, 'Date de début invalide'
+      raise ::ArgumentError, I18n.t(:start_date_is_invalid, scope: :period_range)
     end
 
     begin
       to   = to.is_a?( DateTime ) ? to : to.to_time.to_datetime.end_of_day
     rescue
-      raise ::ArgumentError, 'Date de fin invalide'
+      raise ::ArgumentError, I18n.t(:end_date_is_invalid, scope: :period_range)
     end
 
-    raise ::ArgumentError, 'Date de début supérieur à la date de fin' if from > to
+    raise ::ArgumentError, I18n.t(:start_is_greater_than_end, scope: :period_range) if from > to
 
     super(from, to, exclude_end=false)
   end
@@ -62,7 +65,7 @@ class SmartPeriod::PeriodRange < Range
     elsif other.class.ancestors.include?(Period::PeriodRange)
       super(other)
     else
-      raise ArgumentError, 'Cannot compare Arguments'
+      raise ArgumentError, I18n.t(:incomparable_error, scope: :period_range)
     end
   end
 
@@ -70,7 +73,7 @@ class SmartPeriod::PeriodRange < Range
     if other.is_a?(ActiveSupport::Duration) || other.is_a?(Numeric)
       self.to_i <=> other.to_i
     elsif self.class != other.class
-      raise ArgumentError, 'Cannot compare Arguments'
+      raise ArgumentError, I18n.t(:incomparable_error, scope: :period_range)
     else
       (from <=> other)
     end
@@ -85,6 +88,20 @@ class SmartPeriod::PeriodRange < Range
   end
 
   def to_s(format: '%d %B %Y')
-    "Du #{I18n.l(from, format: '%d %B %Y')} au #{I18n.l(to, format: '%d %B %Y')} inclus"
+    I18n.t(:default_format,
+           scope: :period_range,
+           from:  I18n.l(from, format: format),
+           to:    I18n.l(to, format: format)
+         )
   end
+
+  def i18n(&block)
+    if block.present?
+      yield(from, to)
+    else
+      to_s
+    end
+  end
+
+
 end

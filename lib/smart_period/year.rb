@@ -3,7 +3,7 @@ require_relative "has_many.rb"
 require_relative "has_many/days.rb"
 require_relative "has_many/weeks.rb"
 require_relative "has_many/months.rb"
-require_relative "has_many/years.rb"
+require_relative "has_many/quarters.rb"
 
 class SmartPeriod::Year < SmartPeriod::StandardPeriod
   include SmartPeriod::HasMany::Days
@@ -15,8 +15,12 @@ class SmartPeriod::Year < SmartPeriod::StandardPeriod
     self.from.strftime(format)
   end
 
-  def to_s
-    self.strftime("%Y")
+  def to_s(format: "%Y")
+    self.strftime(format)
+  end
+
+  def i18n(format: '%Y')
+    I18n.l(from, format: format).capitalize
   end
 
 end

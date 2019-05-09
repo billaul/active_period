@@ -8,7 +8,7 @@ require_relative "has_many/years.rb"
 class SmartPeriod::StandardPeriod < SmartPeriod::PeriodRange
 
   def initialize(object)
-    raise ArgumentError unless object.respond_to? :to_datetime
+    raise ArgumentError, I18n.t(:must_implement_to_datetime, scope: :standard_period) unless object.respond_to? :to_datetime
     date = (object.is_a?( DateTime ) ? object : object.to_time.to_datetime)
     super(date.send("beginning_of_#{self._period}")..date.send("end_of_#{self._period}"))
   end
@@ -36,5 +36,13 @@ class SmartPeriod::StandardPeriod < SmartPeriod::PeriodRange
 
   def -(duration)
     self.class.new(from - duration)
+  end
+
+  def to_s
+    raise NotImplementedError
+  end
+
+  def i18n
+    raise NotImplementedError
   end
 end
