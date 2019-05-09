@@ -1,0 +1,2 @@
+module SmartPeriod::BelongsTo
+end

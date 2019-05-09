@@ -1,0 +1,2 @@
+module SmartPeriod::HasMany
+end
