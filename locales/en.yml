@@ -1,11 +1,19 @@
 en:
-  period_range:
-    default_format: "From the %{from} to the %{to} included"
-    end_date_is_invalid: 'The end date is invalid'
-    start_date_is_invalid: 'The start date is invalid'
-    start_is_greater_than_end: 'The start date is greater than the end date'
-    incomparable_error: 'Cannot compare Arguments'
-  must_implement_to_datetime: 'The argument object must implement "to_datetime"'
+  free_period:
+    default_format:             'From the %{from} to the %{to} included'
+    end_date_is_invalid:        'The end date is invalid'
+    start_date_is_invalid:      'The start date is invalid'
+    start_is_greater_than_end:  'The start date is greater than the end date'
+    incomparable_error:         'Cannot compare Arguments'
+  must_implement_to_datetime:   'The argument object must implement "to_datetime"'
   standard_period:
+    day:
+      default_format: '%{wday} %{day} %{month} %{year}'
     week:
-      default_format: "Week %{week} of the year %{year}"
+      default_format: 'Week %{week} of %{year}'
+    month:
+      default_format: '%{month}' %{year}
+    quarter:
+      default_format: '%{quarter_nb}' quarter %{year}
+    year:
+      default_format: '%{year}'

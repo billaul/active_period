@@ -11,6 +11,6 @@ module SmartPeriod::HasMany::Months
       curr = curr.next_month
     end
 
-    return @months
+    @months
   end
 end

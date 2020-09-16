@@ -12,6 +12,6 @@ module SmartPeriod::HasMany::Years
       curr = curr.next_year
     end
 
-    return @years
+    @years
   end
 end

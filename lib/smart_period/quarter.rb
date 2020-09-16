@@ -1,10 +1,10 @@
-require_relative "standard_period.rb"
-require_relative "has_many.rb"
-require_relative "has_many/days.rb"
-require_relative "has_many/weeks.rb"
-require_relative "has_many/months.rb"
-require_relative "belongs_to.rb"
-require_relative "belongs_to/year.rb"
+require_relative 'standard_period.rb'
+require_relative 'has_many.rb'
+require_relative 'has_many/days.rb'
+require_relative 'has_many/weeks.rb'
+require_relative 'has_many/months.rb'
+require_relative 'belongs_to.rb'
+require_relative 'belongs_to/year.rb'
 
 class SmartPeriod::Quarter < SmartPeriod::StandardPeriod
   include SmartPeriod::HasMany::Days
@@ -14,21 +14,24 @@ class SmartPeriod::Quarter < SmartPeriod::StandardPeriod
   include SmartPeriod::BelongsTo::Year
 
   def strftime(format)
-    format = format.gsub(":quarter", self.quarter_nb.to_s)
-    self.from.strftime(format)
+    format = format.gsub(':quarter', quarter_nb.to_s)
+    from.strftime(format)
   end
 
   def quarter_nb
-    @quarter_nb ||= (self.from.month / 3.0).ceil
+    @quarter_nb ||= (from.month / 3.0).ceil
   end
 
-  # @todo i18n
   def to_s
-    self.strftime("Trimestre :quarter - %Y")
+    i18n
   end
 
-  def i18n(format:)
-    I18n.l(from, format: format)
-  end
+  def i18n(&block)
+    return yield(from, to) if block.present?
 
+    I18n.t(:default_format,
+           scope: i18n_scope,
+           quarter_nb:  quarter_nb,
+           year:        from.year)
+  end
 end

@@ -1,11 +1,11 @@
-require_relative "standard_period.rb"
-require_relative "has_many.rb"
-require_relative "has_many/days.rb"
-require_relative "belongs_to.rb"
-require_relative "belongs_to/week.rb"
-require_relative "belongs_to/month.rb"
-require_relative "belongs_to/quarter.rb"
-require_relative "belongs_to/year.rb"
+require_relative 'standard_period.rb'
+require_relative 'has_many.rb'
+require_relative 'has_many/days.rb'
+require_relative 'belongs_to.rb'
+require_relative 'belongs_to/week.rb'
+require_relative 'belongs_to/month.rb'
+require_relative 'belongs_to/quarter.rb'
+require_relative 'belongs_to/year.rb'
 
 class SmartPeriod::Week < SmartPeriod::StandardPeriod
   include SmartPeriod::HasMany::Days
@@ -15,22 +15,19 @@ class SmartPeriod::Week < SmartPeriod::StandardPeriod
   include SmartPeriod::BelongsTo::Year
 
   def strftime(format)
-    self.from.strftime(format)
+    from.strftime(format)
   end
 
-  def to_s(format: "%W - %Y")
-    self.strftime(format)
+  def to_s(format: '%V - %G')
+    strftime(format)
   end
 
-  def i18n(format: nil)
-    if format.present?
-      I18n.l(from, format: format)
-    else
-      I18n.t(:default_format,
-             scope: [:standard_period, :week],
-             week:  self.strftime("%W"),
-             year:  self.strftime("%Y"))
-    end
-  end
+  def i18n(&block)
+    return yield(from, to) if block.present?
 
+    I18n.t(:default_format,
+           scope: i18n_scope,
+           week:  strftime('%V'),
+           year:  strftime('%G'))
+  end
 end

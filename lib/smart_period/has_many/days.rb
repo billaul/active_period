@@ -9,6 +9,6 @@ module SmartPeriod::HasMany::Days
       curr = curr.next_day
     end
 
-    return @days
+    @days
   end
 end

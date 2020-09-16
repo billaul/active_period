@@ -11,6 +11,6 @@ module SmartPeriod::HasMany::Quarters
       curr = curr.next_quarter
     end
 
-    return @quarters
+    @quarters
   end
 end

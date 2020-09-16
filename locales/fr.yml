@@ -1,5 +1,5 @@
 fr:
-  period_range:
+  free_period:
     default_format:             Du %{from} au %{to} inclus
     end_date_is_invalid:        Date de fin invalide
     start_date_is_invalid:      Date de début invalide

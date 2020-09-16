@@ -6,9 +6,9 @@ module SmartPeriod::HasMany::Weeks
 
     @weeks = []
     curr = if from.beginning_of_week.month == from.month
-      from
-    else
-      from.next_week
+             from
+           else
+             from.next_week
     end
 
     while curr <= to
@@ -16,6 +16,6 @@ module SmartPeriod::HasMany::Weeks
       curr = curr.next_week
     end
 
-    return @weeks
+    @weeks
   end
 end
