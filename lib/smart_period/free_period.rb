@@ -94,15 +94,10 @@ class SmartPeriod::FreePeriod < Range
   private
 
   def time_parse(time, msg)
-    if time.is_a? String
-      time = Time.zone.parse(time)
-      raise(::ArgumentError, msg) unless time.is_a? ActiveSupport::TimeWithZone
-
+    if time.class.in? [String, Date]
+      (Time.zone||Time).parse(time.to_s)
+    elsif time.class.in? [Time, ActiveSupport::TimeWithZone]
       time
-    elsif time.is_a? ActiveSupport::TimeWithZone
-      time
-    elsif time.is_a? Date
-      Time.zone.parse(time.to_s)
     else
       raise ::ArgumentError, msg
     end
