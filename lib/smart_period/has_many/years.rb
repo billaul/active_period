@@ -1,17 +1,14 @@
-# @author Lucas Billaudot <billau_l@modulotech.fr>
-# @note when include this module provide itterable access to the days of the SmartPeriod
-module SmartPeriod::HasMany::Years
-  def years
-    return @years if @years.present?
+module SmartPeriod
+  module HasMany
+    # @author Lucas Billaudot <billau_l@modulotech.fr>
+    # @note when include this module provide itterable access to the years of
+    # the FreePeriod
+    module Years
+      include SmartPeriod::HasMany
 
-    @years = []
-    curr = from
-
-    while curr <= to
-      @years << SmartPeriod::Year.new(curr)
-      curr = curr.next_year
+      def years
+        @years ||= itterate(to, SmartPeriod::Month)
+      end
     end
-
-    @years
   end
 end

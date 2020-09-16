@@ -1,16 +1,14 @@
-# @author Lucas Billaudot <billau_l@modulotech.fr>
-# @note when include this module provide itterable access to the days of the SmartPeriod
-module SmartPeriod::HasMany::Quarters
-  def quarters
-    return @quarters if @quarters.present?
+module SmartPeriod
+  module HasMany
+    # @author Lucas Billaudot <billau_l@modulotech.fr>
+    # @note when include this module provide itterable access to the quarters of
+    # the FreePeriod
+    module Quarters
+      include SmartPeriod::HasMany
 
-    @quarters = []
-    curr = from
-    while curr <= to
-      @quarters << SmartPeriod::Quarter.new(curr)
-      curr = curr.next_quarter
+      def quarters
+        @quarters ||= itterate(to, SmartPeriod::Quarter)
+      end
     end
-
-    @quarters
   end
 end

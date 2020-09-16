@@ -21,21 +21,12 @@ class SmartPeriod::FreePeriod < Range
     from = range.first
     to = range.last
 
-    begin
-      from = from.is_a?(DateTime) ? from : from.to_time.to_datetime.beginning_of_day
-    rescue StandardError
-      raise ::ArgumentError, I18n.t(:start_date_is_invalid, scope: :free_period)
-    end
+    from = time_parse(range.first, I18n.t(:start_date_is_invalid, scope: %i[smart_period free_period])).beginning_of_day
+    to = time_parse(range.last, I18n.t(:end_date_is_invalid, scope: %i[smart_period free_period])).end_of_day
 
-    begin
-      to = to.is_a?(DateTime) ? to : to.to_time.to_datetime.end_of_day
-    rescue StandardError
-      raise ::ArgumentError, I18n.t(:end_date_is_invalid, scope: :free_period)
-    end
+    raise ::ArgumentError, I18n.t(:start_is_greater_than_end, scope: %i[smart_period free_period]) if from > to
 
-    raise ::ArgumentError, I18n.t(:start_is_greater_than_end, scope: :free_period) if from > to
-
-    super(from, to, exclude_end = false)
+    super(from, to, range.exclude_end?)
   end
 
   alias from first
@@ -83,13 +74,13 @@ class SmartPeriod::FreePeriod < Range
     days.count.days
   end
 
-  def -(duration)
-    self.class.new((from - duration)..(to - duration))
+  def -(other)
+    self.class.new((from - other)..(to - other))
   end
 
   def to_s(format: '%d %B %Y')
     I18n.t(:default_format,
-           scope: :free_period,
+           scope: %i[smart_period free_period],
            from:  I18n.l(from, format: format),
            to:    I18n.l(to, format: format))
   end
@@ -98,5 +89,24 @@ class SmartPeriod::FreePeriod < Range
     return yield(from, to) if block.present?
 
     to_s
+  end
+
+  private
+
+  def time_parse(time, msg)
+    if time.is_a? String
+      time = Time.zone.parse(time)
+      raise(::ArgumentError, msg) unless time.is_a? ActiveSupport::TimeWithZone
+
+      time
+    elsif time.is_a? ActiveSupport::TimeWithZone
+      time
+    elsif time.is_a? Date
+      Time.zone.parse(time.to_s)
+    else
+      raise ::ArgumentError, msg
+    end
+  rescue StandardError
+    raise ::ArgumentError, msg
   end
 end

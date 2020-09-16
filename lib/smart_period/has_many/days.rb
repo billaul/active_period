@@ -1,14 +1,14 @@
-module SmartPeriod::HasMany::Days
-  def days
-    return @days if @days.present?
+module SmartPeriod
+  module HasMany
+    # @author Lucas Billaudot <billau_l@modulotech.fr>
+    # @note when include this module provide access to the days of the
+    # FreePeriod
+    module Days
+      include SmartPeriod::HasMany
 
-    @days = []
-    curr = from
-    while curr <= to
-      @days << SmartPeriod::Day.new(curr)
-      curr = curr.next_day
+      def days
+        @days ||= itterate(to, SmartPeriod::Day)
+      end
     end
-
-    @days
   end
 end
