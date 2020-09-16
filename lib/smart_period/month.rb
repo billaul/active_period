@@ -28,7 +28,7 @@ module SmartPeriod
       return yield(from, to) if block.present?
 
       I18n.t(:default_format,
-             scope: [:standard_period, _period],
+             scope:  i18n_scope,
              month:  I18n.l(from, format: '%B').capitalize,
              year:   from.year)
     end

@@ -8,7 +8,7 @@ require_relative 'has_many/years.rb'
 module SmartPeriod
   class StandardPeriod < SmartPeriod::FreePeriod
     def initialize(object)
-      date = time_parse(object,  I18n.t(:start_date_is_invalid, scope: %i[smart_period standard_period]) )
+      date = time_parse(object,  I18n.t(:date_is_invalid, scope: %i[smart_period standard_period]) )
       super(date.send("beginning_of_#{_period}")..date.send("end_of_#{_period}"))
     end
 
@@ -38,7 +38,7 @@ module SmartPeriod
     end
 
     def +(duration)
-      self.class.new(from + duration)
+      self.class.new(to + duration)
     end
 
     def ==(other)

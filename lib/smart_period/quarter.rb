@@ -33,7 +33,7 @@ module SmartPeriod
       return yield(from, to) if block.present?
 
       I18n.t(:default_format,
-             scope: i18n_scope,
+             scope:       i18n_scope,
              quarter_nb:  quarter_nb,
              year:        from.year)
     end
