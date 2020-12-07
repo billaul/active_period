@@ -6,15 +6,15 @@ require_relative 'has_many/months.rb'
 require_relative 'belongs_to.rb'
 require_relative 'belongs_to/year.rb'
 
-module SmartPeriod
+module Period
   # @author Lucas Billaudot <billau_l@modulotech.fr>
   # @note One of the StandardPeriod defined in the gem
-  class Quarter < SmartPeriod::StandardPeriod
-    include SmartPeriod::HasMany::Days
-    include SmartPeriod::HasMany::Weeks
-    include SmartPeriod::HasMany::Months
+  class Quarter < Period::StandardPeriod
+    include Period::HasMany::Days
+    include Period::HasMany::Weeks
+    include Period::HasMany::Months
 
-    include SmartPeriod::BelongsTo::Year
+    include Period::BelongsTo::Year
 
     def strftime(format)
       format = format.gsub(':quarter', quarter_nb.to_s)

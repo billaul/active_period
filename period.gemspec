@@ -1,10 +1,10 @@
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'smart_period/version'
+require 'period/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'smart_period'
-  spec.version       = SmartPeriod::VERSION
+  spec.name          = 'period'
+  spec.version       = Period::VERSION
   spec.authors       = ['billau_l']
   spec.email         = ['billau_l@modulotech.fr']
 

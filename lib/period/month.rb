@@ -8,13 +8,13 @@ require_relative 'belongs_to/year.rb'
 
 # @author Lucas Billaudot <billau_l@modulotech.fr>
 # @note One of the StandardPeriod defined in the gem
-module SmartPeriod
-  class Month < SmartPeriod::StandardPeriod
-    include SmartPeriod::HasMany::Days
-    include SmartPeriod::HasMany::Weeks
+module Period
+  class Month < Period::StandardPeriod
+    include Period::HasMany::Days
+    include Period::HasMany::Weeks
 
-    include SmartPeriod::BelongsTo::Quarter
-    include SmartPeriod::BelongsTo::Year
+    include Period::BelongsTo::Quarter
+    include Period::BelongsTo::Year
 
     def strftime(format)
       from.strftime(format)

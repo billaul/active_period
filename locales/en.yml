@@ -1,5 +1,5 @@
 en:
-  smart_period:
+  period:
     free_period:
       default_format:             From the %{from} to the %{to} included
       start_date_is_invalid:      The start date is invalid

@@ -8,23 +8,23 @@ require_relative 'has_many/years.rb'
 I18n.load_path << 'locales/fr.yml'
 I18n.load_path << 'locales/en.yml'
 
-class SmartPeriod::FreePeriod < Range
+class Period::FreePeriod < Range
   include Comparable
 
-  include SmartPeriod::HasMany::Days
-  include SmartPeriod::HasMany::Weeks
-  include SmartPeriod::HasMany::Months
-  include SmartPeriod::HasMany::Quarters
-  include SmartPeriod::HasMany::Years
+  include Period::HasMany::Days
+  include Period::HasMany::Weeks
+  include Period::HasMany::Months
+  include Period::HasMany::Quarters
+  include Period::HasMany::Years
 
   def initialize(range)
     from = range.first
     to = range.last
 
-    from = time_parse(range.first, I18n.t(:start_date_is_invalid, scope: %i[smart_period free_period])).beginning_of_day
-    to = time_parse(range.last, I18n.t(:end_date_is_invalid, scope: %i[smart_period free_period])).end_of_day
+    from = time_parse(range.first, I18n.t(:start_date_is_invalid, scope: %i[period free_period])).beginning_of_day
+    to = time_parse(range.last, I18n.t(:end_date_is_invalid, scope: %i[period free_period])).end_of_day
 
-    raise ::ArgumentError, I18n.t(:start_is_greater_than_end, scope: %i[smart_period free_period]) if from > to
+    raise ::ArgumentError, I18n.t(:start_is_greater_than_end, scope: %i[period free_period]) if from > to
 
     super(from, to, range.exclude_end?)
   end
@@ -80,7 +80,7 @@ class SmartPeriod::FreePeriod < Range
 
   def to_s(format: '%d %B %Y')
     I18n.t(:default_format,
-           scope: %i[smart_period free_period],
+           scope: %i[period free_period],
            from:  I18n.l(from, format: format),
            to:    I18n.l(to, format: format))
   end
@@ -95,7 +95,7 @@ class SmartPeriod::FreePeriod < Range
 
   def time_parse(time, msg)
     if time.class.in? [String, Date]
-      (Time.zone||Time).parse(time.to_s)
+      Period.env_time.parse(time.to_s)
     elsif time.class.in? [Time, ActiveSupport::TimeWithZone]
       time
     else

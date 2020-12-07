@@ -1,4 +1,4 @@
-module SmartPeriod
+module Period
   module HasMany
     # @author Lucas Billaudot <billau_l@modulotech.fr>
     # @note when include this module provide itterable access to the weeks of
@@ -6,23 +6,18 @@ module SmartPeriod
     module Weeks
       # TODO, rewrite this to respect ISO %V %G
       def weeks
+        @weeks ||= []
         return @weeks if @weeks.present?
-
-        @weeks = []
-        curr =
-          if from.beginning_of_week.month == from.month
-            from
-          else
-            from.next_week
-          end
-
+        curr = from
         while curr <= to
-          @weeks << SmartPeriod::Week.new(curr)
+          week = Period::Week.new(curr)
+          @weeks << week if week.iso_date.in?(self)
           curr = curr.next_week
         end
 
         @weeks
       end
+
     end
   end
 end

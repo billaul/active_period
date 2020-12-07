@@ -5,11 +5,11 @@ require_relative 'has_many/months.rb'
 require_relative 'has_many/quarters.rb'
 require_relative 'has_many/years.rb'
 
-module SmartPeriod
-  class StandardPeriod < SmartPeriod::FreePeriod
+module Period
+  class StandardPeriod < Period::FreePeriod
     def initialize(object)
-      date = time_parse(object,  I18n.t(:date_is_invalid, scope: %i[smart_period standard_period]) )
-      super(date.send("beginning_of_#{_period}")..date.send("end_of_#{_period}"))
+      time = time_parse(object,  I18n.t(:date_is_invalid, scope: %i[period standard_period]) )
+      super(time.send("beginning_of_#{_period}")..time.send("end_of_#{_period}"))
     end
 
     def next
@@ -42,9 +42,13 @@ module SmartPeriod
     end
 
     def ==(other)
-      raise ArgumentError unless other.class.ancestors.include?(SmartPeriod::FreePeriod)
+      raise ArgumentError unless other.class.ancestors.include?(Period::FreePeriod)
 
       from == other.from && to == other.to
+    end
+
+    def iso_date
+      from
     end
 
     def to_s
@@ -56,7 +60,7 @@ module SmartPeriod
     end
 
     def i18n_scope
-      [:smart_period, :standard_period, _period]
+      [:period, :standard_period, _period]
     end
   end
 end

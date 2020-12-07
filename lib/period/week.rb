@@ -7,15 +7,15 @@ require_relative 'belongs_to/month.rb'
 require_relative 'belongs_to/quarter.rb'
 require_relative 'belongs_to/year.rb'
 
-module SmartPeriod
+module Period
   # @author Lucas Billaudot <billau_l@modulotech.fr>
   # @note One of the StandardPeriod defined in the gem
-  class Week < SmartPeriod::StandardPeriod
-    include SmartPeriod::HasMany::Days
+  class Week < Period::StandardPeriod
+    include Period::HasMany::Days
 
-    include SmartPeriod::BelongsTo::Month
-    include SmartPeriod::BelongsTo::Quarter
-    include SmartPeriod::BelongsTo::Year
+    include Period::BelongsTo::Month
+    include Period::BelongsTo::Quarter
+    include Period::BelongsTo::Year
 
     def strftime(format)
       from.strftime(format)
@@ -33,5 +33,10 @@ module SmartPeriod
              week:  strftime('%V'),
              year:  strftime('%G'))
     end
+
+    def iso_date
+      from + 3.days
+    end
+
   end
 end

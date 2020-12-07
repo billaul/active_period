@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in smart_period.gemspec
+# Specify your gem's dependencies in period.gemspec
 
 gemspec
