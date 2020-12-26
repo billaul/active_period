@@ -27,7 +27,7 @@ Or install it yourself as:
 - **Smart-Period** is limited at full day of time and will always round the starting and ending to the beginning and the ending of the day
 
 
-### Quick view (TL;DR)
+## Quick view (TL;DR)
 ``` ruby
   # Get all user created today
   User.where(created_at: Period.today)
@@ -42,7 +42,7 @@ Or install it yourself as:
   => "From the 20 January 2017 to the 19 January 2021 included"
 ```
 
-### Detailed view
+## Detailed view
 
 There's two way to create and manipulate a period of time `FreePeriod` and `StandardPeriod`
 
@@ -117,7 +117,7 @@ You can quickly access close period of time with `.(last|this|next)_(day|week|mo
   # No comment
 ```
 
-### HasMany smaller-periods
+## HasMany smaller-periods
 
 **FreePeriod** and some **StandardPeriod** respond to `.days`, `.weeks`, `.months`, `.quarters` and `.years`    
 These methods return an array of **StandardPeriod** who are include inside the current period
@@ -139,7 +139,7 @@ These methods return an array of **StandardPeriod** who are include inside the c
   Period.this_quarter.days.count
 ```
 
-### BelongsTo greater-period
+## BelongsTo greater-period
 
 **StandardPeriod** respond to `.day`, `.week`, `.month`, `.quarter` and `.year`        
 These methods return a **StandardPeriod** who include the current period    
@@ -161,7 +161,7 @@ These methods return a **StandardPeriod** who include the current period
   Period.this_year.months.second.weeks.last.days.first
 ```
 
-### ActiveRecord
+## ActiveRecord
 
 As **Period** inherite from **Range**, you can natively use them in **ActiveRecord** query
 
@@ -170,7 +170,7 @@ As **Period** inherite from **Range**, you can natively use them in **ActiveReco
   Book.where(published_at: Period.this_year)
 ```
 
-### I18n and to_s
+## I18n and to_s
 
 I18n is supported for `en` and `fr`   
 
@@ -198,7 +198,7 @@ For a FreePeriod or if you need to print the start and the end of your period di
   end
 ```
 
-### Bug reports
+## Bug reports
 
 If you discover any bugs, feel free to create an issue on GitHub. Please add as much information as possible to help us in fixing the potential bug. We also encourage you to help even more by forking and sending us a pull request.
 
