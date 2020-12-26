@@ -6,7 +6,6 @@ Gem::Specification.new do |spec|
   spec.name          = 'smart-period'
   spec.version       = Period::VERSION
   spec.authors       = ['billau_l']
-  spec.email         = ['billau_l@modulotech.fr']
 
   spec.summary       = 'Manage time ranges without brain damage.'
   # spec.description   = "Period.new('01/01/2020'..Time.now)"
