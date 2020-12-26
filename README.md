@@ -71,7 +71,7 @@ Period.new('04/01/2000'..'08/01/2000')
 
 ### Standard Period of time
 
-Using **StandardPeriod** you are limited to strictly bordered periods of time
+Using **StandardPeriod** you are limited to strictly bordered periods of time      
 These periods are `day`, `week`, `month`, `quarter` and `year`
 
 ```ruby
@@ -117,10 +117,10 @@ Period.today
 # No comment
 ```
 
-## HasMany smaller-periods
+## HasMany
 
 **FreePeriod** and some **StandardPeriod** respond to `.days`, `.weeks`, `.months`, `.quarters` and `.years`    
-These methods return an array of **StandardPeriod** who are include inside the current period
+These methods return an array of **StandardPeriod** who are overlapping the current period
 
 | HasMany -> [\<StandardPeriod>] | .days | .weeks | .months | .quarters | .years |
 |-------------------------------|:----:|:-----:|:------:|:--------:|:-----:|
@@ -137,9 +137,11 @@ These methods return an array of **StandardPeriod** who are include inside the c
 Period.new('01/01/1970'..Time.now).weeks.count
 # How many day in the current quarter
 Period.this_quarter.days.count
+# Get all the quarters overlapping a Period of time
+Period.new(...).quarters
 ```
 
-## BelongsTo greater-period
+## BelongsTo
 
 **StandardPeriod** respond to `.day`, `.week`, `.month`, `.quarter` and `.year`        
 These methods return a **StandardPeriod** who include the current period    
