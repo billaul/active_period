@@ -3,7 +3,6 @@ require 'period'
 
 class TestDay < Minitest::Test
   # Day object
-
   def test_new_day_form_string
     assert_instance_of Period::Day,
                        Period::Day.new('01/01/2017')
@@ -27,6 +26,9 @@ class TestDay < Minitest::Test
   def test_day_i18n
     assert_equal 'Sunday 1 January 2017',
                  Period::Day.new('01/01/2017').i18n
+
+    assert_equal '01/01/2017',
+                 Period::Day.new('01/01/2017').i18n {|from, to| from.strftime('%d/%m/%Y')}           
   end
 
   def test_day_next
@@ -55,7 +57,6 @@ class TestDay < Minitest::Test
   end
 
   # Day BelongsTo
-
   def test_day_belongs_to_week
     assert_equal Period::Week.new('01/01/2017'),
                  Period::Day.new('01/01/2017').week

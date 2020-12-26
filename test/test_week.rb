@@ -3,7 +3,6 @@ require 'period'
 
 class TestWeek < Minitest::Test
   # Week object
-
   def test_new_week_form_string
     assert_instance_of Period::Week,
                        Period::Week.new('01/01/2017')
@@ -55,7 +54,6 @@ class TestWeek < Minitest::Test
   end
 
   # Week BelongsTo
-
   def test_week_belongs_to_month
     assert_equal Period::Month.new(Period::Week.new('01/01/2017').from),
                  Period::Week.new('01/01/2017').month

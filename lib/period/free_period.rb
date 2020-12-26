@@ -18,15 +18,16 @@ class Period::FreePeriod < Range
   include Period::HasMany::Years
 
   def initialize(range)
+    raise ::ArgumentError, I18n.t(:param_must_be_a_range, scope: %i[period free_period]) unless range.class.ancestors.include?(Range)
     from = range.first
     to = range.last
 
     from = time_parse(range.first, I18n.t(:start_date_is_invalid, scope: %i[period free_period])).beginning_of_day
     to = time_parse(range.last, I18n.t(:end_date_is_invalid, scope: %i[period free_period])).end_of_day
-
+    to = to.prev_day if range.exclude_end?
     raise ::ArgumentError, I18n.t(:start_is_greater_than_end, scope: %i[period free_period]) if from > to
 
-    super(from, to, range.exclude_end?)
+    super(from, to)
   end
 
   alias from first
@@ -41,10 +42,6 @@ class Period::FreePeriod < Range
   alias succ next
 
   def prev
-    raise NotImplementedError
-  end
-
-  def self.from_date(_date)
     raise NotImplementedError
   end
 
@@ -74,8 +71,22 @@ class Period::FreePeriod < Range
     days.count.days
   end
 
-  def -(other)
-    self.class.new((from - other)..(to - other))
+  def -(duration)
+    self.class.new((from - duration)..(to - duration))
+  end
+
+  def +(duration)
+    self.class.new((from + duration)..(to + duration))
+  end
+
+  def ==(other)
+    raise ArgumentError unless other.class.ancestors.include?(Period::FreePeriod)
+
+    from == other.from && to == other.to
+  end
+
+  def strftime(format)
+    to_s(format: format)
   end
 
   def to_s(format: '%d %B %Y')

@@ -6,6 +6,7 @@ en:
       end_date_is_invalid:        The end date is invalid
       start_is_greater_than_end:  The start date is greater than the end date
       incomparable_error:         Cannot compare Arguments
+      param_must_be_a_range:      The parameter must inherit from the Range class
     standard_period:
       date_is_invalid:            The date is invalid
       day:

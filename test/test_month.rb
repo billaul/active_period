@@ -3,7 +3,6 @@ require 'period'
 
 class TestMonth < Minitest::Test
   # Month object
-
   def test_new_month_form_string
     assert_instance_of Period::Month,
                        Period::Month.new('01/01/2017')
@@ -65,7 +64,6 @@ class TestMonth < Minitest::Test
   end
 
   # Month BelongsTo
-
   def test_month_belongs_to_quarter
     assert_equal Period::Quarter.new(Period::Month.new('01/01/2017').from),
                  Period::Month.new('01/01/2017').quarter
@@ -110,15 +108,4 @@ class TestMonth < Minitest::Test
     assert_equal 5, Period::Month.new('01/12/2020').weeks.count
   end
 
-  def test_quarter_has_many_weeks
-    assert_equal 13, Period::Quarter.new('01/01/2017').weeks.count
-    assert_equal 13, Period::Quarter.new('01/04/2017').weeks.count
-    assert_equal 13, Period::Quarter.new('01/07/2017').weeks.count
-    assert_equal 13, Period::Quarter.new('01/10/2017').weeks.count
-
-    assert_equal 13, Period::Quarter.new('01/01/2020').weeks.count
-    assert_equal 13, Period::Quarter.new('01/04/2020').weeks.count
-    assert_equal 13, Period::Quarter.new('01/07/2020').weeks.count
-    assert_equal 14, Period::Quarter.new('01/10/2020').weeks.count
-  end
 end

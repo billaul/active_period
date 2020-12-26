@@ -7,6 +7,7 @@ fr:
       start_is_greater_than_end:  Date de début supérieur à la date de fin
       incomparable_error:         Les arguments ne sont pas comparables
       must_implement_to_datetime: L'argument doit repondre a "to_datetime"
+      param_must_be_a_range:      Le paramètre doit hériter de la class Range
     standard_period:
       day:
         default_format: '%{wday} %{day} %{month} %{year}'
@@ -18,3 +19,26 @@ fr:
         default_format: '%{quarter_nb} semestre %{year}'
       year:
         default_format: '%{year}'
+  date:
+    month_names:
+    -
+    - janvier
+    - février
+    - mars
+    - avril
+    - mai
+    - juin
+    - juillet
+    - août
+    - septembre
+    - octobre
+    - novembre
+    - décembre
+    day_names:
+    - dimanche
+    - lundi
+    - mardi
+    - mercredi
+    - jeudi
+    - vendredi
+    - samedi

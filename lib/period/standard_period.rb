@@ -41,12 +41,6 @@ module Period
       self.class.new(to + duration)
     end
 
-    def ==(other)
-      raise ArgumentError unless other.class.ancestors.include?(Period::FreePeriod)
-
-      from == other.from && to == other.to
-    end
-
     def iso_date
       from
     end

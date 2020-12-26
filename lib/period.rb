@@ -1,6 +1,7 @@
 require_relative 'period/version.rb'
 require 'active_support/all'
 require 'i18n'
+require_relative 'numeric.rb'
 
 require_relative 'period/free_period.rb'
 require_relative 'period/day.rb'
@@ -34,8 +35,8 @@ module Period
         Object.const_get("Period::#{period.capitalize}").new(date)
       end
 
-      define_method period.to_s do
-        Object.const_get("Period::#{period.capitalize}")
+      define_method period.to_s do |range|
+        Object.const_get("Period::#{period.capitalize}").new(range)
       end
     end
 
@@ -50,10 +51,10 @@ module Period
 
       case last_next
       when 'last'
-        from = env_time.now
-        from -= 1.send(klass) unless method_name.match?(/from_now$/)
-        from = from.send("beginning_of_#{klass}")
-        to = count.to_i.send(klass).ago.send("end_of_#{klass}")
+        from = count.to_i.send(klass).ago.send("beginning_of_#{klass}")
+        to = env_time.now
+        to -= 1.send(klass) unless method_name.match?(/from_now$/)
+        to = to.send("end_of_#{klass}")
       when 'next'
         from = env_time.now
         from += 1.send(klass) unless method_name.match?(/from_now$/)

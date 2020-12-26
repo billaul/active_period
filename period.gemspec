@@ -9,20 +9,19 @@ Gem::Specification.new do |spec|
   spec.email         = ['billau_l@modulotech.fr']
 
   spec.summary       = 'Manage time ranges without brain damage.'
-  spec.description   = "Period.new('01/01/2020'..Time.now)"
+  # spec.description   = "Period.new('01/01/2020'..Time.now)"
   spec.homepage      = "https://github.com/billaul/period"
   spec.license       = 'MIT'
-  spec.post_install_message = Period.today.to_s
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
   if spec.respond_to?(:metadata)
     # spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
 
-    spec.metadata["bug_tracker_uri"] = spec.homepage + '/issues'
-    spec.metadata["homepage_uri"] = spec.homepage
+    spec.metadata["bug_tracker_uri"]   = spec.homepage + '/issues'
+    spec.metadata["homepage_uri"]      = spec.homepage
     spec.metadata["documentation_uri"] = spec.homepage
-    spec.metadata["source_code_uri"] = spec.homepage
+    spec.metadata["source_code_uri"]   = spec.homepage
     # spec.metadata["changelog_uri"] = "TODO: Put your gem's CHANGELOG.md URL here."
   else
     raise "RubyGems 2.0 or newer is required to protect against " \
@@ -43,4 +42,5 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'i18n', '1.6.0'
   spec.add_development_dependency 'bundler', '~> 2.0'
   spec.add_development_dependency 'rake', '~> 10.0'
+  spec.add_development_dependency 'rails-i18n', '~> 6.0.0'
 end
