@@ -1,4 +1,4 @@
-# Smart-Period [![Gem Version](https://fury-badge.herokuapp.com/rb/smart-period.svg)](http://badge.fury.io/rb/smart-period) [![Code Climate](https://codeclimate.com/github/billaul/period.svg)](https://codeclimate.com/github/billaul/period) [![Inline docs](http://inch-ci.org/github/billaul/period.svg)](http://inch-ci.org/github/billaul/period)
+# Smart-Period [![Gem Version](https://badge.fury.io/rb/smart-period.svg)](https://badge.fury.io/rb/smart-period) [![Code Climate](https://codeclimate.com/github/billaul/period.svg)](https://codeclimate.com/github/billaul/period) [![Inline docs](http://inch-ci.org/github/billaul/period.svg)](http://inch-ci.org/github/billaul/period)
 
 Smart-Period aims to simplify Time-range manipulation
 
