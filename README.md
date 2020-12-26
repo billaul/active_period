@@ -200,9 +200,13 @@ For a FreePeriod or if you need to print the start and the end of your period di
 
 ## Bug reports
 
-If you discover any bugs, feel free to create an issue on GitHub. Please add as much information as possible to help us in fixing the potential bug. We also encourage you to help even more by forking and sending us a pull request.
+If you discover any bugs, feel free to create an [issue on GitHub](https://github.com/billaul/period/issues)        
+Please add as much information as possible to help us in fixing the potential bug     
+We also encourage you to help even more by forking and sending us a pull request
 
-https://github.com/billaul/period/issues
+
+
+No issues will be addressed outside GitHub
 
 ## License
 
