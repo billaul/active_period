@@ -31,12 +31,16 @@ Or install it yourself as:
 ``` ruby
 # Get all user created today
 User.where(created_at: Period.today)
+
 # Get how many weeks there is from the beginning of time ?
 Period.new('01/01/1970'..Time.now).weeks.count
+
 # Is Trump still in charge ?
 Time.now.in? Period.new('20/01/2017'...'20/01/2021')
+
 # Get the week of an arbitrary date
 Period.week('24/04/1990')
+
 # Write a date for me (I18n supported)
 Period.new('20/01/2017'...'20/01/2021').to_s
 => "From the 20 January 2017 to the 19 January 2021 included"
