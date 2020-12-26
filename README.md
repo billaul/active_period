@@ -20,7 +20,7 @@ Or install it yourself as:
 
 ## Usage
 
-**Smart-Period** was designed to simplify time-range manipulation, specialy with rails and user input   
+**Smart-Period** was designed to simplify time-range manipulation, specialy with rails (~> 5) and user input   
 
 **Warning** :
 - A time-range take place between two date and it's different from an abstract duration of time
