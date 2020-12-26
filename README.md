@@ -1,4 +1,7 @@
-# Smart-Period
+# Smart-Period [![Gem Version](https://fury-badge.herokuapp.com/rb/smart-period.png)](http://badge.fury.io/rb/smart-period)
+[![Code Climate](https://codeclimate.com/github/billaul/period.png)](https://codeclimate.com/github/billaul/period)
+[![Inline docs](http://inch-ci.org/github/billaul/period.png)](http://inch-ci.org/github/billaul/period)
+
 
 Smart-Period aims to simplify Time-range manipulation
 
@@ -258,11 +261,6 @@ No issues will be addressed outside GitHub
 ## Maintainer
 
 * Myself (https://github.com/billaul)
-
-[![Gem Version](https://fury-badge.herokuapp.com/rb/smart-period.png)](http://badge.fury.io/rb/smart-period)
-[![Code Climate](https://codeclimate.com/github/billaul/period.png)](https://codeclimate.com/github/billaul/period)
-[![Inline docs](http://inch-ci.org/github/billaul/period.png)](http://inch-ci.org/github/billaul/period)
-
 
 ## License
 
