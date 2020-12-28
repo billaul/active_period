@@ -6,7 +6,6 @@ Gem::Specification.new do |spec|
   spec.name          = 'smart-period'
   spec.version       = Period::VERSION
   spec.authors       = ['billau_l']
-  spec.email         = ['billau_l@modulotech.fr']
 
   spec.summary       = 'Manage time ranges without brain damage.'
   # spec.description   = "Period.new('01/01/2020'..Time.now)"
@@ -35,7 +34,7 @@ Gem::Specification.new do |spec|
   end
   spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
-  spec.require_paths = %w[lib locals]
+  spec.require_paths = %w[lib locales]
 
   spec.required_ruby_version = '> 2.5'
   spec.add_runtime_dependency 'activesupport', '>= 5', '< 7'
