@@ -1,6 +1,6 @@
 # Smart-Period [![Gem Version](https://badge.fury.io/rb/smart-period.svg)](https://badge.fury.io/rb/smart-period) [![Code Climate](https://codeclimate.com/github/billaul/period.svg)](https://codeclimate.com/github/billaul/period) [![Inline docs](http://inch-ci.org/github/billaul/period.svg)](http://inch-ci.org/github/billaul/period)
 
-Smart-Period aims to simplify Time-range manipulation
+Smart-Period aims to simplify Time-range manipulation. 
 
 ## Installation
 
@@ -29,6 +29,8 @@ Or install it yourself as:
 
 ## Quick view (TL;DR)
 ``` ruby
+require 'period'
+
 # Get all user created today
 User.where(created_at: Period.today)
 
