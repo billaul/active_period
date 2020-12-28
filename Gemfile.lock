@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    smart-period (1.0.4)
+    smart-period (1.0.6)
       activesupport (>= 5, < 7)
       i18n (~> 1)
 
