@@ -5,9 +5,6 @@ require_relative 'has_many/months.rb'
 require_relative 'has_many/quarters.rb'
 require_relative 'has_many/years.rb'
 
-I18n.load_path << 'locales/fr.yml'
-I18n.load_path << 'locales/en.yml'
-
 class Period::FreePeriod < Range
   include Comparable
 

@@ -2,7 +2,6 @@ require_relative 'period/version.rb'
 require 'active_support/all'
 require 'i18n'
 require_relative 'numeric.rb'
-
 require_relative 'period/free_period.rb'
 require_relative 'period/day.rb'
 require_relative 'period/week.rb'

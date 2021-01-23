@@ -34,7 +34,7 @@ Gem::Specification.new do |spec|
   end
   spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
-  spec.require_paths = %w[lib locales]
+  spec.require_paths = %w[lib]
 
   spec.required_ruby_version = '> 2.5'
   spec.add_runtime_dependency 'activesupport', '>= 5', '< 7'
