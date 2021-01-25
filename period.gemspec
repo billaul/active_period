@@ -36,7 +36,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = %w[lib]
 
-  spec.required_ruby_version = '> 2.5'
+  spec.required_ruby_version = '>= 2.5'
   spec.add_runtime_dependency 'activesupport', '>= 5', '< 7'
   spec.add_runtime_dependency 'i18n', '~> 1'
   spec.add_development_dependency 'bundler', '~> 2.0'
