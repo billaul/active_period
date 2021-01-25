@@ -16,7 +16,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install period
+    $ gem install smart-period
 
 ## Usage
 
