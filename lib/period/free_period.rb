@@ -14,6 +14,11 @@ class Period::FreePeriod < Range
   include Period::HasMany::Quarters
   include Period::HasMany::Years
 
+  # @author Lucas Billaudot <billau_l@modulotech.fr>
+  # @param range [Range] A valid range
+  # @return [self] A new instance of Period::FreePeriod
+  # @raise ArgumentError if the params range is not a Range
+  # @raise ArgumentError if the params range is invalid
   def initialize(range)
     raise ::ArgumentError, I18n.t(:param_must_be_a_range, scope: %i[period free_period]) unless range.class.ancestors.include?(Range)
     from = range.first
@@ -33,11 +38,13 @@ class Period::FreePeriod < Range
   alias to last
   alias end last
 
+  # @raise NotImplementedError This method must be implemented id daughter class
   def next
     raise NotImplementedError
   end
   alias succ next
 
+  # @raise NotImplementedError This method must be implemented id daughter class
   def prev
     raise NotImplementedError
   end
@@ -64,28 +71,44 @@ class Period::FreePeriod < Range
     end
   end
 
+  # Don't return an Integer. ActiveSupport::Duration is a better numeric
+  # representation a in time manipulation context
+  # @return [ActiveSupport::Duration] Number of day
   def to_i
     days.count.days
   end
 
+  # Shift a period to the past
+  # @params see https://api.rubyonrails.org/classes/ActiveSupport/TimeWithZone.html#method-i-2B
+  # @return [self] A new period of the same kind
   def -(duration)
     self.class.new((from - duration)..(to - duration))
   end
 
+  # Shift a period to the future
+  # @params see https://api.rubyonrails.org/classes/ActiveSupport/TimeWithZone.html#method-i-2B
+  # @return [self] A new period of the same kind
   def +(duration)
     self.class.new((from + duration)..(to + duration))
   end
 
+  # @param other [Period::FreePeriod] Any kind of Period::FreePeriod object
+  # @return [Boolean] true if period are equals, false otherwise
+  # @raise ArgumentError if params other is not a Period::FreePeriod of some kind
   def ==(other)
     raise ArgumentError unless other.class.ancestors.include?(Period::FreePeriod)
 
     from == other.from && to == other.to
   end
 
+  # @param format [String] A valid format for I18n.l
+  # @return [String] Formated string
   def strftime(format)
     to_s(format: format)
   end
 
+  # @param format [String] A valid format for I18n.l
+  # @return [String] Formated string
   def to_s(format: '%d %B %Y')
     I18n.t(:default_format,
            scope: %i[period free_period],
@@ -93,6 +116,10 @@ class Period::FreePeriod < Range
            to:    I18n.l(to, format: format))
   end
 
+  # If no block given, it's an alias to to_s
+  # For a block {|from,to| ... }
+  # @yieldparam from [DateTime] the start of the period
+  # @yieldparam to [DateTime] the end of the period
   def i18n(&block)
     return yield(from, to) if block.present?
 
