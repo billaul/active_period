@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require 'period'
+require 'active_period'
 
 class TestDay < Minitest::Test
   # Day object
@@ -28,7 +28,7 @@ class TestDay < Minitest::Test
                  ActivePeriod::Day.new('01/01/2017').i18n
 
     assert_equal '01/01/2017',
-                 ActivePeriod::Day.new('01/01/2017').i18n {|from, to| from.strftime('%d/%m/%Y')}           
+                 ActivePeriod::Day.new('01/01/2017').i18n {|from, to| from.strftime('%d/%m/%Y')}
   end
 
   def test_day_next

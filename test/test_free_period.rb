@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require 'period'
+require 'active_period'
 
 class TestFreePeriod < Minitest::Test
 
@@ -89,8 +89,12 @@ class TestFreePeriod < Minitest::Test
     assert_equal period + 1.month, Period.new('01/02/2020'..'10/11/2020')
   end
 
-  def test_equal
+  def test_equal_ending_excluded
     assert Period.new('01/01/2020'...'01/02/2020') == Period.month('01/01/2020')
+  end
+
+  def test_equal_ending_included
+    assert Period.new('01/01/2020'..'31/01/2020') == Period.month('01/01/2020')
   end
 
   def test_to_s

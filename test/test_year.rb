@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require 'period'
+require 'active_period'
 
 class TestYear < Minitest::Test
   # Year object

@@ -43,7 +43,7 @@ class ActivePeriod::FreePeriod < Range
       end
     # raise ::ArgumentError, I18n.t(:endless_excluded_end_is_forbiden, scope: %i[period free_period]) if to.nil? && range.exclude_end?
     # to = to.prev_day if range.exclude_end?
-    raise ::ArgumentError, I18n.t(:start_is_equal_to_end, scope: %i[period free_period])     if range.exclude_end? && from && to && from == to
+    raise ::ArgumentError, I18n.t(:start_is_equal_to_end_excluded, scope: %i[period free_period]) if range.exclude_end? && from && to && from.to_date == to.to_date
     raise ::ArgumentError, I18n.t(:start_is_greater_than_end, scope: %i[period free_period]) if from && to && from > to
 
     super(from, to, range.exclude_end?)
@@ -115,7 +115,7 @@ class ActivePeriod::FreePeriod < Range
   def ==(other)
     raise ArgumentError unless other.class.ancestors.include?(ActivePeriod::FreePeriod)
 
-    from == other.from && to == other.to
+    from == other.from && (self.exclude_end?  ? self.end.prev_day.end_of_day  : self.end) == (other.exclude_end? ? other.end.prev_day.end_of_day : other.end)
   end
 
   # @param format [String] A valid format for I18n.l
@@ -131,7 +131,7 @@ class ActivePeriod::FreePeriod < Range
            scope: %i[period free_period],
            from:  I18n.l(self.begin, format: format, default: nil),
            to:    I18n.l(self.end,   format: format, default: nil),
-           ending: ending)
+           ending: I18n.t(ending, scope: %i[period]))
   end
 
   # If no block given, it's an alias to to_s

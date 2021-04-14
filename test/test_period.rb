@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require 'period'
+require 'active_period'
 
 class TestPeriod < Minitest::Test
   # Period module method
