@@ -133,11 +133,11 @@ These methods return an array of **StandardPeriod** who are overlapping the curr
 | HasMany -> [\<StandardPeriod>] | .days | .weeks | .months | .quarters | .years |
 |-------------------------------|:----:|:-----:|:------:|:--------:|:-----:|
 | FreePeriod                    |   X  |   X   |    X   |     X    |   X   |
-| StandardPeriod::day           |      |       |        |          |       |
-| StandardPeriod::week          |   X  |       |        |          |       |
-| StandardPeriod::month         |   X  |   X   |        |          |       |
-| StandardPeriod::quarter       |   X  |   X   |    X   |          |       |
-| StandardPeriod::year          |   X  |   X   |    X   |     X    |       |
+| StandardPeriod::Day           |      |       |        |          |       |
+| StandardPeriod::Week          |   X  |       |        |          |       |
+| StandardPeriod::Month         |   X  |   X   |        |          |       |
+| StandardPeriod::Quarter       |   X  |   X   |    X   |          |       |
+| StandardPeriod::Year          |   X  |   X   |    X   |     X    |       |
 
 #### Example
 ```ruby
@@ -158,11 +158,11 @@ These methods return a **StandardPeriod** who include the current period
 | BelongTo -> StandardPeriod | .day | .week | .month | .quarter | .year |
 |----------------------------|:---:|:----:|:-----:|:-------:|:----:|
 | FreePeriod                 |     |      |       |         |      |
-| StandardPeriod::day        |     |   X  |   X   |    X    |   X  |
-| StandardPeriod::week       |     |      |   X   |    X    |   X  |
-| StandardPeriod::month      |     |      |       |    X    |   X  |
-| StandardPeriod::quarter    |     |      |       |         |   X  |
-| StandardPeriod::year       |     |      |       |         |      |
+| StandardPeriod::Day        |     |   X  |   X   |    X    |   X  |
+| StandardPeriod::Week       |     |      |   X   |    X    |   X  |
+| StandardPeriod::Month      |     |      |       |    X    |   X  |
+| StandardPeriod::Quarter    |     |      |       |         |   X  |
+| StandardPeriod::Year       |     |      |       |         |      |
 
 #### Example with BelongTo and HasMany
 
