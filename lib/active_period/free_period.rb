@@ -5,18 +5,18 @@ require_relative 'has_many/months.rb'
 require_relative 'has_many/quarters.rb'
 require_relative 'has_many/years.rb'
 
-class Period::FreePeriod < Range
+class ActivePeriod::FreePeriod < Range
   include Comparable
 
-  include Period::HasMany::Days
-  include Period::HasMany::Weeks
-  include Period::HasMany::Months
-  include Period::HasMany::Quarters
-  include Period::HasMany::Years
+  include ActivePeriod::HasMany::Days
+  include ActivePeriod::HasMany::Weeks
+  include ActivePeriod::HasMany::Months
+  include ActivePeriod::HasMany::Quarters
+  include ActivePeriod::HasMany::Years
 
   # @author Lucas Billaudot <billau_l@modulotech.fr>
   # @param range [Range] A valid range
-  # @return [self] A new instance of Period::FreePeriod
+  # @return [self] A new instance of ActivePeriod::FreePeriod
   # @raise ArgumentError if the params range is not a Range
   # @raise ArgumentError if the params range is invalid
   def initialize(range)
@@ -53,8 +53,8 @@ class Period::FreePeriod < Range
     if other.class.in?([DateTime, Time, ActiveSupport::TimeWithZone])
       from.to_i <= other.to_i && other.to_i <= to.to_i
     elsif other.is_a? Date
-      super(Period::Day.new(other))
-    elsif other.class.ancestors.include?(Period::FreePeriod)
+      super(ActivePeriod::Day.new(other))
+    elsif other.class.ancestors.include?(ActivePeriod::FreePeriod)
       super(other)
     else
       raise ArgumentError, I18n.t(:incomparable_error, scope: :free_period)
@@ -92,11 +92,11 @@ class Period::FreePeriod < Range
     self.class.new((from + duration)..(to + duration))
   end
 
-  # @param other [Period::FreePeriod] Any kind of Period::FreePeriod object
+  # @param other [ActivePeriod::FreePeriod] Any kind of ActivePeriod::FreePeriod object
   # @return [Boolean] true if period are equals, false otherwise
-  # @raise ArgumentError if params other is not a Period::FreePeriod of some kind
+  # @raise ArgumentError if params other is not a ActivePeriod::FreePeriod of some kind
   def ==(other)
-    raise ArgumentError unless other.class.ancestors.include?(Period::FreePeriod)
+    raise ArgumentError unless other.class.ancestors.include?(ActivePeriod::FreePeriod)
 
     from == other.from && to == other.to
   end

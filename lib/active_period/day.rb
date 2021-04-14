@@ -5,11 +5,11 @@ require_relative 'belongs_to/month.rb'
 require_relative 'belongs_to/quarter.rb'
 require_relative 'belongs_to/year.rb'
 
-class Period::Day < Period::StandardPeriod
-  include Period::BelongsTo::Week
-  include Period::BelongsTo::Month
-  include Period::BelongsTo::Quarter
-  include Period::BelongsTo::Year
+class ActivePeriod::Day < ActivePeriod::StandardPeriod
+  include ActivePeriod::BelongsTo::Week
+  include ActivePeriod::BelongsTo::Month
+  include ActivePeriod::BelongsTo::Quarter
+  include ActivePeriod::BelongsTo::Year
 
   def strftime(format)
     from.strftime(format)

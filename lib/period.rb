@@ -1,4 +1,4 @@
-require_relative 'period/version.rb'
+require_relative 'active_period/version.rb'
 require 'active_support/all'
 require 'i18n'
 
@@ -6,16 +6,17 @@ I18n.load_path << File.expand_path("../config/locales/en.yml", __dir__)
 I18n.load_path << File.expand_path("../config/locales/fr.yml", __dir__)
 
 require_relative 'numeric.rb'
-require_relative 'period/free_period.rb'
-require_relative 'period/day.rb'
-require_relative 'period/week.rb'
-require_relative 'period/month.rb'
-require_relative 'period/quarter.rb'
-require_relative 'period/year.rb'
+require_relative 'active_period/free_period.rb'
+require_relative 'active_period/day.rb'
+require_relative 'active_period/week.rb'
+require_relative 'active_period/month.rb'
+require_relative 'active_period/quarter.rb'
+require_relative 'active_period/year.rb'
+require_relative 'period.rb'
 
 module Period
   def self.new(range)
-    Period::FreePeriod.new(range)
+    ActivePeriod::FreePeriod.new(range)
   end
 
   def self.env_time
@@ -26,20 +27,20 @@ module Period
     %i[day week month quarter year].each do |period|
       define_method "last_#{period}" do
         date = env_time.now.send(period == :day ? 'yesterday' : "last_#{period}")
-        Object.const_get("Period::#{period.capitalize}").new(date)
+        Object.const_get("ActivePeriod::#{period.capitalize}").new(date)
       end
 
       define_method "this_#{period}" do
-        Object.const_get("Period::#{period.capitalize}").new(env_time.now)
+        Object.const_get("ActivePeriod::#{period.capitalize}").new(env_time.now)
       end
 
       define_method "next_#{period}" do
         date = env_time.now.send(period == :day ? 'tomorrow' : "next_#{period}")
-        Object.const_get("Period::#{period.capitalize}").new(date)
+        Object.const_get("ActivePeriod::#{period.capitalize}").new(date)
       end
 
       define_method period.to_s do |range|
-        Object.const_get("Period::#{period.capitalize}").new(range)
+        Object.const_get("ActivePeriod::#{period.capitalize}").new(range)
       end
     end
 

@@ -1,6 +1,6 @@
-# ActivePeriod [![Gem Version](https://badge.fury.io/rb/active_period.svg)](https://badge.fury.io/rb/active_period) [![Code Climate](https://codeclimate.com/github/billaul/period.svg)](https://codeclimate.com/github/billaul/period) [![Inline docs](http://inch-ci.org/github/billaul/period.svg)](http://inch-ci.org/github/billaul/period)
+# ActivePeriod:: [![Gem Version](https://badge.fury.io/rb/active_period.svg)](https://badge.fury.io/rb/active_period) [![Code Climate](https://codeclimate.com/github/billaul/period.svg)](https://codeclimate.com/github/billaul/period) [![Inline docs](http://inch-ci.org/github/billaul/period.svg)](http://inch-ci.org/github/billaul/period)
 
-ActivePeriod aims to simplify Time-range manipulation.
+ActivePeriod:: aims to simplify Time-range manipulation.
 
 ## Installation
 
@@ -20,11 +20,11 @@ Or install it yourself as:
 
 ## Usage
 
-**ActivePeriod** was designed to simplify time-range manipulation, specialy with rails (~> 5) and user input   
+**ActivePeriod:: * was designed to simplify time-range manipulation, specialy with rails (~> 5) and user input   
 
 **Warning** :
 - A time-range take place between two date and it's different from an abstract duration of time
-- **ActivePeriod** is limited at full day of time and will always round the starting and ending to the beginning and the ending of the day
+- **ActivePeriod:: * is limited at full day of time and will always round the starting and ending to the beginning and the ending of the day
 
 
 ## Quick view (TL;DR)
@@ -65,6 +65,8 @@ Period.new('01/01/2000'...'01/02/2000')
 Period.new('01/01/2000'..1.week.ago)
 # or in a rails Controller with params
 Period.new(params[:start_date]..params[:end_date])
+# or from a range
+('01/01/2000'...'01/02/2000').to_period
 ```
 
 **FreePeriod** can be manipulated with `+` and `-`          
@@ -86,7 +88,7 @@ Period.week(42.day.ago)
 # To get the first month of 2020
 Period.month('01/01/2020')
 # or if you like it verbious
-Period::Month.new('01/01/2020')
+ActivePeriod:: onth.new('01/01/2020')
 # or if you need the current week
 Period.week(Time.now)
 ```
@@ -131,11 +133,11 @@ These methods return an array of **StandardPeriod** who are overlapping the curr
 | HasMany -> [\<StandardPeriod>] | .days | .weeks | .months | .quarters | .years |
 |-------------------------------|:----:|:-----:|:------:|:--------:|:-----:|
 | FreePeriod                    |   X  |   X   |    X   |     X    |   X   |
-| StandardPeriod::Day           |      |       |        |          |       |
-| StandardPeriod::Week          |   X  |       |        |          |       |
-| StandardPeriod::Month         |   X  |   X   |        |          |       |
-| StandardPeriod::Quarter       |   X  |   X   |    X   |          |       |
-| StandardPeriod::Year          |   X  |   X   |    X   |     X    |       |
+| StandardActivePeriod:: ay           |      |       |        |          |       |
+| StandardActivePeriod:: eek          |   X  |       |        |          |       |
+| StandardActivePeriod:: onth         |   X  |   X   |        |          |       |
+| StandardActivePeriod:: uarter       |   X  |   X   |    X   |          |       |
+| StandardActivePeriod:: ear          |   X  |   X   |    X   |     X    |       |
 
 #### Example
 ```ruby
@@ -156,11 +158,11 @@ These methods return a **StandardPeriod** who include the current period
 | BelongTo -> StandardPeriod | .day | .week | .month | .quarter | .year |
 |----------------------------|:---:|:----:|:-----:|:-------:|:----:|
 | FreePeriod                 |     |      |       |         |      |
-| StandardPeriod::Day        |     |   X  |   X   |    X    |   X  |
-| StandardPeriod::Week       |     |      |   X   |    X    |   X  |
-| StandardPeriod::Month      |     |      |       |    X    |   X  |
-| StandardPeriod::Quarter    |     |      |       |         |   X  |
-| StandardPeriod::Year       |     |      |       |         |      |
+| StandardActivePeriod:: ay        |     |   X  |   X   |    X    |   X  |
+| StandardActivePeriod:: eek       |     |      |   X   |    X    |   X  |
+| StandardActivePeriod:: onth      |     |      |       |    X    |   X  |
+| StandardActivePeriod:: uarter    |     |      |       |         |   X  |
+| StandardActivePeriod:: ear       |     |      |       |         |      |
 
 #### Example with BelongTo and HasMany
 
@@ -251,7 +253,7 @@ If your Period [begin in a time zone and end in another](https://en.wikipedia.or
 
 ## Bug reports
 
-If you discover any bugs, feel free to create an [issue on GitHub](https://github.com/billaul/period/issues)        
+If you discover any bugs, feel free to create an [issue on GitHub](https://github.com/billaul/active_period/issues)        
 Please add as much information as possible to help us in fixing the potential bug     
 We also encourage you to help even more by forking and sending us a pull request
 

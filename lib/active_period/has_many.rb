@@ -1,6 +1,6 @@
 # @author Lucas Billaudot <billau_l@modulotech.fr>
 # @note This module define all period of time, who are include in the current period
-module Period
+module ActivePeriod
   module HasMany
     def itterate(to,klass)
       ret = []

@@ -1,10 +1,10 @@
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'period/version'
+require 'active_period/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'active_period'
-  spec.version       = Period::VERSION
+  spec.version       = ActivePeriod::VERSION
   spec.authors       = ['billau_l']
 
   spec.summary       = 'Manage time ranges without brain damage.'

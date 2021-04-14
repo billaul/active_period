@@ -21,27 +21,27 @@ class TestPeriod < Minitest::Test
 
   # Test new standard period
   def test_new_day
-    assert_equal Period::Day.new(Time.now),
+    assert_equal ActivePeriod::Day.new(Time.now),
                  Period.day(Time.now)
   end
 
   def test_new_week
-    assert_equal Period::Week.new(Time.now),
+    assert_equal ActivePeriod::Week.new(Time.now),
                  Period.week(Time.now)
   end
 
   def test_new_month
-    assert_equal Period::Month.new(Time.now),
+    assert_equal ActivePeriod::Month.new(Time.now),
                  Period.month(Time.now)
   end
 
   def test_new_quarter
-    assert_equal Period::Quarter.new(Time.now),
+    assert_equal ActivePeriod::Quarter.new(Time.now),
                  Period.quarter(Time.now)
   end
 
   def test_new_year
-    assert_equal Period::Year.new(Time.now),
+    assert_equal ActivePeriod::Year.new(Time.now),
                  Period.year(Time.now)
   end
 

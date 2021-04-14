@@ -7,6 +7,10 @@ class TestFreePeriod < Minitest::Test
     Period.new '01/01/2020'..'10/10/2020'
   end
 
+  def range_to_period
+    ('01/01/2020'..'10/10/2020').to_period
+  end
+
   def test_new
     assert_raises ArgumentError do
       Period.new 42

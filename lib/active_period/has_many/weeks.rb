@@ -1,4 +1,4 @@
-module Period
+module ActivePeriod
   module HasMany
     # @author Lucas Billaudot <billau_l@modulotech.fr>
     # @note when include this module provide itterable access to the weeks of
@@ -9,7 +9,7 @@ module Period
         return @weeks if @weeks.present?
         curr = from
         while curr <= to
-          week = Period::Week.new(curr)
+          week = ActivePeriod::Week.new(curr)
           @weeks << week if week.iso_date.in?(self)
           curr = curr.next_week
         end
