@@ -29,7 +29,7 @@ Or install it yourself as:
 
 ## Quick view (TL;DR)
 ``` ruby
-require 'period'
+require 'active_period'
 
 # Get all user created today
 User.where(created_at: Period.today)
