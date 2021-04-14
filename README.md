@@ -251,6 +251,13 @@ Time zone are supported, you have nothing to do
 If you change the global `Time.zone` of your app, you have nothing to do    
 If your Period [begin in a time zone and end in another](https://en.wikipedia.org/wiki/Daylight_saving_time), you have nothing to do
 
+## Planned updates
+
+- [ ] Boundless Period support -> from.now until forever
+- [ ] ActiveRecord Serializer
+- [ ] Rails 6 support
+- [ ] Ruby 3 support
+
 ## Bug reports
 
 If you discover any bugs, feel free to create an [issue on GitHub](https://github.com/billaul/active_period/issues)        
