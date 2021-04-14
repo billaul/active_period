@@ -12,5 +12,15 @@ module ActivePeriod
       end
       ret
     end
+
+    def enumerator(to, klass)
+      curr = from
+      Enumerator.new do |y|
+        while curr.to_date <= to.to_date
+          y  << klass.new(curr.to_date)
+          curr = curr.send("next_#{klass._period}")
+        end
+      end
+    end
   end
 end

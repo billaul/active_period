@@ -19,24 +19,41 @@ class ActivePeriod::FreePeriod < Range
   # @return [self] A new instance of ActivePeriod::FreePeriod
   # @raise ArgumentError if the params range is not a Range
   # @raise ArgumentError if the params range is invalid
-  def initialize(range)
+  def initialize(range, allow_beginless: true, allow_endless: true)
     raise ::ArgumentError, I18n.t(:param_must_be_a_range, scope: %i[period free_period]) unless range.class.ancestors.include?(Range)
-    from = range.first
-    to = range.last
 
-    from = time_parse(range.first, I18n.t(:start_date_is_invalid, scope: %i[period free_period])).beginning_of_day
-    to = time_parse(range.last, I18n.t(:end_date_is_invalid, scope: %i[period free_period])).end_of_day
-    to = to.prev_day if range.exclude_end?
-    raise ::ArgumentError, I18n.t(:start_is_greater_than_end, scope: %i[period free_period]) if from > to
+    from =
+      if allow_beginless && nilthy?(range.begin)
+        nil
+      else
+        time_parse(
+          range.begin,
+          I18n.t(:start_date_is_invalid, scope: %i[period free_period])
+        ).beginning_of_day
+      end
 
-    super(from, to)
+    to =
+      if allow_endless && nilthy?(range.end)
+        nil
+      else
+        time_parse(
+          range.end,
+          I18n.t(:end_date_is_invalid, scope: %i[period free_period])
+        ).end_of_day
+      end
+    # raise ::ArgumentError, I18n.t(:endless_excluded_end_is_forbiden, scope: %i[period free_period]) if to.nil? && range.exclude_end?
+    # to = to.prev_day if range.exclude_end?
+    raise ::ArgumentError, I18n.t(:start_is_equal_to_end, scope: %i[period free_period])     if range.exclude_end? && from && to && from == to
+    raise ::ArgumentError, I18n.t(:start_is_greater_than_end, scope: %i[period free_period]) if from && to && from > to
+
+    super(from, to, range.exclude_end?)
   end
 
   alias from first
   alias beginning first
 
   alias to last
-  alias end last
+  alias ending last
 
   # @raise NotImplementedError This method must be implemented id daughter class
   def next
@@ -110,23 +127,49 @@ class ActivePeriod::FreePeriod < Range
   # @param format [String] A valid format for I18n.l
   # @return [String] Formated string
   def to_s(format: '%d %B %Y')
-    I18n.t(:default_format,
+    I18n.t(bounding_format,
            scope: %i[period free_period],
-           from:  I18n.l(from, format: format),
-           to:    I18n.l(to, format: format))
+           from:  I18n.l(self.begin, format: format, default: nil),
+           to:    I18n.l(self.end,   format: format, default: nil),
+           ending: ending)
   end
 
   # If no block given, it's an alias to to_s
   # For a block {|from,to| ... }
-  # @yieldparam from [DateTime] the start of the period
-  # @yieldparam to [DateTime] the end of the period
+  # @yieldparam from [DateTime|Nil] the start of the period
+  # @yieldparam to [DateTime|Nil] the end of the period
+  # @yieldparam exclude_end? [Boolean] is the ending of the period excluded
   def i18n(&block)
-    return yield(from, to) if block.present?
+    return yield(from, to, exclude_end?) if block.present?
 
     to_s
   end
 
   private
+
+  def bounding_format
+    if self.begin.nil? && self.end.nil?
+      :boundless_format
+    elsif self.begin.nil?
+      :beginless_format
+    elsif self.end.nil?
+      :endless_format
+    else
+      :default_format
+    end
+  end
+
+  def ending
+    if exclude_end?
+      :excluded
+    else
+      :included
+    end
+  end
+
+  def nilthy?(time)
+    time.nil? || (time.is_a?(String) && time.empty?)
+  end
 
   def time_parse(time, msg)
     if time.class.in? [String, Date]

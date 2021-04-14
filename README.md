@@ -253,7 +253,7 @@ If your Period [begin in a time zone and end in another](https://en.wikipedia.or
 
 ## Planned updates
 
-- [ ] Boundless Period support -> from.now until forever
+- [ ] Boundless Period support -> from date until forever / from beginning of time to date
 - [ ] ActiveRecord Serializer
 - [ ] Rails 6 support
 - [ ] Ruby 3 support
