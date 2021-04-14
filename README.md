@@ -1,13 +1,13 @@
-# Smart-Period [![Gem Version](https://badge.fury.io/rb/smart-period.svg)](https://badge.fury.io/rb/smart-period) [![Code Climate](https://codeclimate.com/github/billaul/period.svg)](https://codeclimate.com/github/billaul/period) [![Inline docs](http://inch-ci.org/github/billaul/period.svg)](http://inch-ci.org/github/billaul/period)
+# ActivePeriod [![Gem Version](https://badge.fury.io/rb/active_period.svg)](https://badge.fury.io/rb/active_period) [![Code Climate](https://codeclimate.com/github/billaul/period.svg)](https://codeclimate.com/github/billaul/period) [![Inline docs](http://inch-ci.org/github/billaul/period.svg)](http://inch-ci.org/github/billaul/period)
 
-Smart-Period aims to simplify Time-range manipulation. 
+ActivePeriod aims to simplify Time-range manipulation.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'period'
+gem 'active_period'
 ```
 
 And then execute:
@@ -16,15 +16,15 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install smart-period
+    $ gem install active_period
 
 ## Usage
 
-**Smart-Period** was designed to simplify time-range manipulation, specialy with rails (~> 5) and user input   
+**ActivePeriod** was designed to simplify time-range manipulation, specialy with rails (~> 5) and user input   
 
 **Warning** :
 - A time-range take place between two date and it's different from an abstract duration of time
-- **Smart-Period** is limited at full day of time and will always round the starting and ending to the beginning and the ending of the day
+- **ActivePeriod** is limited at full day of time and will always round the starting and ending to the beginning and the ending of the day
 
 
 ## Quick view (TL;DR)
