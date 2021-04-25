@@ -6,7 +6,7 @@ require_relative 'has_many/quarters.rb'
 require_relative 'has_many/years.rb'
 
 class ActivePeriod::FreePeriod < Range
-  include Comparable
+  include ActivePeriod::Comparable
 
   include ActivePeriod::HasMany::Days
   include ActivePeriod::HasMany::Weeks
@@ -68,35 +68,12 @@ class ActivePeriod::FreePeriod < Range
     raise NotImplementedError
   end
 
-  # @TODO support Limitless
-  def include?(other)
-    if other.class.in?([DateTime, Time, ActiveSupport::TimeWithZone])
-      self.begin.to_i <= other.to_i && other.to_i <= self.end.to_i
-    elsif other.is_a? Date
-      super(ActivePeriod::Day.new(other))
-    elsif other.class.ancestors.include?(ActivePeriod::FreePeriod)
-      super(other)
-    else
-      raise ArgumentError, I18n.t(:incomparable_error, scope: :free_period)
-    end
-  end
-
-  # @TODO support Limitless
-  def <=>(other)
-    if other.is_a?(ActiveSupport::Duration) || other.is_a?(Numeric)
-      to_i <=> other.to_i
-    elsif self.class != other.class
-      raise ArgumentError, I18n.t(:incomparable_error, scope: :free_period)
-    else
-      (from <=> other)
-    end
-  end
-
   # Don't return an Integer. ActiveSupport::Duration is a better numeric
   # representation a in time manipulation context
   # @return [ActiveSupport::Duration] Number of day
   def to_i
-    days.count.days
+    return Float::INFINITY if endless? || beginless?
+    days.count.days  # @TODO fix this
   end
 
   # Shift a period to the past
@@ -152,7 +129,7 @@ class ActivePeriod::FreePeriod < Range
   # @author Lucas Billaudot <billau_l@modulotech.fr>
   # @return [DateTime] The real value of end acording to exclude_end
   def calculated_end
-    if self.end.present?
+    if !endless?
       if exclude_end?
         self.end.prev_day
       else
@@ -161,14 +138,26 @@ class ActivePeriod::FreePeriod < Range
     end
   end
 
+  def endless?
+    self.end.nil?
+  end
+
+  def beginless?
+    self.begin.nil?
+  end
+
+  def boundless?
+    beginless? && endless?
+  end
+
   private
 
   def bounding_format
-    if self.begin.nil? && self.end.nil?
+    if boundless?
       :boundless_format
-    elsif self.begin.nil?
+    elsif beginless?
       :beginless_format
-    elsif self.end.nil?
+    elsif endless?
       :endless_format
     else
       :default_format
