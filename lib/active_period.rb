@@ -1,6 +1,7 @@
 require_relative 'active_period/version.rb'
 require 'active_support/all'
 require 'i18n'
+require "date"
 
 I18n.load_path << File.expand_path("../config/locales/en.yml", __dir__)
 I18n.load_path << File.expand_path("../config/locales/fr.yml", __dir__)
