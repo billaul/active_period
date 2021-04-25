@@ -3,6 +3,9 @@ require 'active_period'
 
 class TestFreePeriod < Minitest::Test
 
+  # TODO
+  # Write tests for every has_many relations
+
   def period
     Period.new '01/01/2020'..'10/10/2020'
   end
@@ -27,6 +30,20 @@ class TestFreePeriod < Minitest::Test
     assert_raises ArgumentError do
       Period.new '01/01/2020'...'01/01/2020'
     end
+    assert_raises ArgumentError do
+      Period.new('01/01/2020'.., allow_endless: false)
+    end
+    assert_raises ArgumentError do
+      Period.new('01/01/2020'..'', allow_endless: false)
+    end
+    assert_raises ArgumentError do
+      Period.new(..'01/01/2020', allow_beginless: false)
+    end
+    assert_raises ArgumentError do
+      Period.new(''..'01/01/2020', allow_beginless: false)
+    end
+
+    assert_equal period, range_to_period
   end
 
   def test_from
@@ -97,11 +114,20 @@ class TestFreePeriod < Minitest::Test
     assert Period.new('01/01/2020'..'31/01/2020') == Period.month('01/01/2020')
   end
 
-  def test_to_s
+  def test_to_s_included
     assert_equal period.to_s, 'From the 01 January 2020 to the 10 October 2020 included'
     I18n.locale = :fr
     assert_equal period.to_s, 'Du 01 janvier 2020 au 10 octobre 2020 inclus'
     I18n.locale = :en
   end
+
+  def test_to_s_excluded
+    period = Period.new '01/01/2020'...'10/10/2020'
+    assert_equal period.to_s, 'From the 01 January 2020 to the 10 October 2020 excluded'
+    I18n.locale = :fr
+    assert_equal period.to_s, 'Du 01 janvier 2020 au 10 octobre 2020 exclue'
+    I18n.locale = :en
+  end
+
 
 end

@@ -7,7 +7,7 @@ module ActivePeriod
       include ActivePeriod::HasMany
 
       def days
-        @days ||= itterate(to, ActivePeriod::Day)
+        @days ||= ActivePeriod::Collection.new(ActivePeriod::Day, self)
       end
     end
   end

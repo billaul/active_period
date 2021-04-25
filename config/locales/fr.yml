@@ -15,6 +15,7 @@ fr:
       incomparable_error:               Les arguments ne sont pas comparables
       param_must_be_a_range:            Le paramètre doit hériter de la class Range
     standard_period:
+      base_class_id_abstract:     StandardPeriod est une class abstraite qui ne doit pas être utiliser directement
       day:
         default_format: '%{wday} %{day} %{month} %{year}'
       week:
@@ -25,6 +26,8 @@ fr:
         default_format: '%{quarter_nb} semestre %{year}'
       year:
         default_format: '%{year}'
+  collection:
+    param_must_be_a_standard_period:  Le paramètre doit hériter de la class StandardPeriod
   date:
     month_names:
     -

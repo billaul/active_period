@@ -5,7 +5,7 @@ module ActivePeriod
     # FreePeriod
     module Month
       def month
-        ActivePeriod::Month.new(iso_date)
+        ActivePeriod::Month.new(enumerable_date)
       end
     end
   end

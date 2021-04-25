@@ -4,17 +4,10 @@ module ActivePeriod
     # @note when include this module provide itterable access to the weeks of
     # the FreePeriod
     module Weeks
-      def weeks
-        @weeks ||= []
-        return @weeks if @weeks.present?
-        curr = from
-        while curr <= to
-          week = ActivePeriod::Week.new(curr)
-          @weeks << week if week.iso_date.in?(self)
-          curr = curr.next_week
-        end
+      include ActivePeriod::HasMany
 
-        @weeks
+      def weeks
+        @quarters ||= ActivePeriod::Collection.new(ActivePeriod::Week, self)
       end
 
     end

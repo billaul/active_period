@@ -15,6 +15,7 @@ en:
       incomparable_error:               Cannot compare Arguments
       param_must_be_a_range:            The parameter must inherit from the Range class
     standard_period:
+      base_class_id_abstract:     StandardPeriod is not intended to be used directly
       date_is_invalid:            The date is invalid
       day:
         default_format: '%{wday} %{day} %{month} %{year}'
@@ -26,3 +27,6 @@ en:
         default_format: '%{quarter_nb} quarter %{year}'
       year:
         default_format: '%{year}'
+    collection:
+      param_klass_must_be_a_standard_period:  The parameter klass must inherit from the StandardPeriod class
+      param_period_must_be_a_free_period:  The parameter perod must inherit from the FreePeriod class

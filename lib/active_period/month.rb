@@ -32,5 +32,9 @@ module ActivePeriod
              month:  I18n.l(from, format: '%B').capitalize,
              year:   from.year)
     end
+
+    def enumerable_date
+      from
+    end
   end
 end

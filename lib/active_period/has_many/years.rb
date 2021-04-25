@@ -7,8 +7,9 @@ module ActivePeriod
       include ActivePeriod::HasMany
 
       def years
-        @years ||= itterate(to, ActivePeriod::Month)
+        @years ||= ActivePeriod::Collection.new(ActivePeriod::Year, self)
       end
+      
     end
   end
 end

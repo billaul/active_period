@@ -7,7 +7,7 @@ module ActivePeriod
       include ActivePeriod::HasMany
 
       def quarters
-        @quarters ||= itterate(to, ActivePeriod::Quarter)
+        @quarters ||= ActivePeriod::Collection.new(ActivePeriod::Quarter, self)
       end
     end
   end

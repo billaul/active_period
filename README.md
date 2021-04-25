@@ -257,6 +257,7 @@ If your Period [begin in a time zone and end in another](https://en.wikipedia.or
 - [ ] ActiveRecord Serializer
 - [ ] Rails 6 support
 - [ ] Ruby 3 support
+- [ ] implement ActivePeriod::Collection Period.this_year.days -> ActivePeriod::Collection
 
 ## Bug reports
 

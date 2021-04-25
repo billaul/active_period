@@ -29,5 +29,9 @@ module ActivePeriod
              scope: i18n_scope,
              year:  from.year)
     end
+
+    def enumerable_date
+      from
+    end
   end
 end

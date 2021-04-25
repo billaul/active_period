@@ -37,5 +37,9 @@ module ActivePeriod
              quarter_nb:  quarter_nb,
              year:        from.year)
     end
+
+    def enumerable_date
+      from
+    end
   end
 end
