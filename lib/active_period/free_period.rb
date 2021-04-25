@@ -24,29 +24,29 @@ class ActivePeriod::FreePeriod < Range
   def initialize(range, allow_beginless: true, allow_endless: true)
     raise ::ArgumentError, I18n.t(:param_must_be_a_range, scope: %i[period free_period]) unless range.class.ancestors.include?(Range)
 
-    # TODO  refactor this two
-    from = unless allow_beginless && nilthy?(range.begin)
-      time_parse(
-        range.begin,
-        I18n.t(:start_date_is_invalid, scope: %i[period free_period])
-      ).beginning_of_day
-    end
-    to = unless allow_endless && nilthy?(range.end)
-      time_parse(
-        range.end,
-        I18n.t(:end_date_is_invalid, scope: %i[period free_period])
-      ).end_of_day
-    end
+    from = range.begin.presence || -Date::INFINITY
+    to   = range.end.presence   || Date::INFINITY
+
+    from = time_parse(from, I18n.t(:begin_date_is_invalid, i18n_scope ))
+    to   = time_parse(to,   I18n.t(:end_date_is_invalid,   i18n_scope ))
+
+    raise ::ArgumentError, I18n.t(:begin_date_is_invalid, i18n_scope ) if !allow_beginless && from.try(:infinity?)
+    raise ::ArgumentError, I18n.t(:end_date_is_invalid,   i18n_scope ) if !allow_endless   &&   to.try(:infinity?)
+
+    from = from.try(:beginning_of_day)
+    to   =   to.try(:end_of_day)
 
     # raise ::ArgumentError, I18n.t(:endless_excluded_end_is_forbiden, scope: %i[period free_period]) if to.nil? && range.exclude_end?
     # to = to.prev_day if range.exclude_end?
-    if range.exclude_end? && from && to && from.to_date == to.to_date
-      raise ::ArgumentError, I18n.t(:start_is_equal_to_end_excluded, scope: %i[period free_period])
+    from = from.beginning_of_day
+    to   = to.end_of_day
+
+    if range.exclude_end? && (from.try(:to_date) || from) == (to.try(:to_date) || to)
+      raise ::ArgumentError, I18n.t(:start_is_equal_to_end_excluded, i18n_scope)
     end
 
-    if from && to && from > to
-      raise ::ArgumentError, I18n.t(:start_is_greater_than_end, scope: %i[period free_period])
-    end
+    raise ::ArgumentError, I18n.t(:start_is_greater_than_end, i18n_scope) if from > to
+
 
     super(from, to, range.exclude_end?)
   end
@@ -129,12 +129,10 @@ class ActivePeriod::FreePeriod < Range
   # @author Lucas Billaudot <billau_l@modulotech.fr>
   # @return [DateTime] The real value of end acording to exclude_end
   def calculated_end
-    if !endless?
-      if exclude_end?
-        self.end.prev_day
-      else
-        self.end
-      end
+    if exclude_end?
+      self.end.prev_day
+    else
+      self.end
     end
   end
 
@@ -151,6 +149,10 @@ class ActivePeriod::FreePeriod < Range
   end
 
   private
+
+  def i18n_scope
+    {scope: %i[period free_period]}
+  end
 
   def bounding_format
     if boundless?
@@ -172,14 +174,13 @@ class ActivePeriod::FreePeriod < Range
     end
   end
 
-  def nilthy?(time)
-    time.nil? || (time.is_a?(String) && time.empty?)
-  end
-
   def time_parse(time, msg)
-    if time.class.in? [String, Date]
+    case time
+    when Date::Infinity, Float::INFINITY, -Float::INFINITY
+      time
+    when String, Date
       Period.env_time.parse(time.to_s)
-    elsif time.class.in? [Time, ActiveSupport::TimeWithZone]
+    when Time, ActiveSupport::TimeWithZone
       time
     else
       raise ::ArgumentError, msg

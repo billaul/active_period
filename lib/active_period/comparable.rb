@@ -2,15 +2,14 @@ module ActivePeriod
   module Comparable
     include ::Comparable
 
-    # @TODO support Limitless
     def include?(other)
       case other
       when DateTime, Time, ActiveSupport::TimeWithZone
         include_time?(other)
       when Date
-        super(ActivePeriod::Day.new(other))
+        include_period?(ActivePeriod::Day.new(other))
       when ActivePeriod::FreePeriod
-        super(other)
+        include_period?(other)
       else
         raise ArgumentError, I18n.t(:incomparable_error, scope: :free_period)
       end
@@ -36,6 +35,10 @@ module ActivePeriod
       return true if self.endless? && self.begin <= other
       return true if self.beginless? && self.calculated_end >= other
       return true if self.begin.to_i <= other.to_i && other.to_i <= self.end.to_i
+    end
+
+    def include_period?(other)
+      self.include_time?(other.begin) && self.include_time?(other.calculated_end) 
     end
 
   end

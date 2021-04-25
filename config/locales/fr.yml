@@ -7,7 +7,7 @@ fr:
       beginless_format:                 Jusqu'au %{from} %{ending}
       endless_format:                   Depuis le %{to}
       boundless_format:                 Sans limite de temps
-      start_date_is_invalid:            Date de début invalide
+      begin_date_is_invalid:            Date de début invalide
       end_date_is_invalid:              Date de fin invalide
       endless_excluded_end_is_forbiden: Impossible d'exclure le dernier jours d'une periode sans fin
       start_is_equal_to_end_excluded:   La date de début et de fin ne peuvent pas être égale quand la date de fin est exclue

@@ -6,6 +6,7 @@ I18n.load_path << File.expand_path("../config/locales/en.yml", __dir__)
 I18n.load_path << File.expand_path("../config/locales/fr.yml", __dir__)
 
 require_relative 'numeric.rb'
+require_relative 'date.rb'
 require_relative 'range.rb'
 require_relative 'active_period/collection.rb'
 require_relative 'active_period/comparable.rb'

@@ -7,7 +7,7 @@ en:
       beginless_format:                 Until the %{to} %{ending}
       endless_format:                   From the %{from}
       boundless_format:                 Limitless time range
-      start_date_is_invalid:            The start date is invalid
+      begin_date_is_invalid:            The start date is invalid
       end_date_is_invalid:              The end date is invalid
       endless_excluded_end_is_forbiden: It's impossible to exclude the last day of an endless range
       start_is_equal_to_end_excluded:   The start date and end date cannot be equal when the end date is excluded
