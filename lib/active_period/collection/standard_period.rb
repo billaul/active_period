@@ -6,8 +6,6 @@ module ActivePeriod
       private
 
       def enumerator
-        raise RangeError.new "cannot get the first element of beginless range" if period.beginless?
-
         Enumerator.new do |yielder|
           current = klass.new(period.begin)
           while current.end <= period.end || period.include?(current)
@@ -20,8 +18,6 @@ module ActivePeriod
       end
 
       def reverse_enumerator
-        raise RangeError.new "cannot get the last element of endless range" if period.endless?
-
         Enumerator.new do |yielder|
           current = klass.new(period.end)
           while current.begin <= period.begin || period.include?(current)
