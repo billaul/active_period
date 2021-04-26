@@ -128,7 +128,7 @@ Period.today
 ## HasMany
 
 **FreePeriod** and some **StandardPeriod** respond to `.days`, `.weeks`, `.months`, `.quarters` and `.years`    
-These methods return an array of **StandardPeriod** who are overlapping the current period
+These methods return an **ActivePeriod::Collection** of **StandardPeriod** who are overlapping the current period
 
 | HasMany -> [\<StandardPeriod>] | .days | .weeks | .months | .quarters | .years |
 |-------------------------------|:----:|:-----:|:------:|:--------:|:-----:|
@@ -146,7 +146,7 @@ Period.new('01/01/1970'..Time.now).weeks.count
 # How many day in the current quarter
 Period.this_quarter.days.count
 # Get all the quarters overlapping a Period of time
-Period.new(...).quarters
+Period.new(Time.now..2.month.from_now).quarters.to_a
 ```
 
 ## BelongsTo
@@ -253,11 +253,12 @@ If your Period [begin in a time zone and end in another](https://en.wikipedia.or
 
 ## Planned updates
 
-- [ ] Boundless Period support -> from date until forever / from beginning of time to date
+- [x] Boundless Period support -> from date until forever / from beginning of time to date
 - [ ] ActiveRecord Serializer
 - [ ] Rails 6 support
 - [ ] Ruby 3 support
-- [ ] implement ActivePeriod::Collection Period.this_year.days -> ActivePeriod::Collection
+- [x] implement ActivePeriod::Collection Period.this_year.days -> ActivePeriod::Collection
+- [ ] Holiday support
 
 ## Bug reports
 

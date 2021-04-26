@@ -5,7 +5,7 @@ module ActivePeriod
     # FreePeriod
     module Week
       def week
-        ActivePeriod::Week.new(enumerable_date)
+        ActivePeriod::Week.new(self.begin)
       end
     end
   end

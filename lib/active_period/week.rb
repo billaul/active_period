@@ -34,9 +34,8 @@ module ActivePeriod
              year:  strftime('%G'))
     end
 
-    def enumerable_date
+    def include_date
       from + 3.days
     end
-
   end
 end

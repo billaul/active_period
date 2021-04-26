@@ -108,4 +108,25 @@ class TestMonth < Minitest::Test
     assert_equal 5, ActivePeriod::Month.new('01/12/2020').weeks.count
   end
 
+  def test_no_method_error
+    period = ActivePeriod::Month.new('01/01/2017')
+    assert_raises NoMethodError do
+      period.day
+    end
+    assert_raises NoMethodError do
+      period.week
+    end
+    assert_raises NoMethodError do
+      period.month
+    end
+    assert_raises NoMethodError do
+      period.months
+    end
+    assert_raises NoMethodError do
+      period.quarters
+    end
+    assert_raises NoMethodError do
+      period.years
+    end
+  end
 end

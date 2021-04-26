@@ -5,7 +5,7 @@ module ActivePeriod
     # FreePeriod
     module Year
       def year
-        ActivePeriod::Year.new(enumerable_date)
+        ActivePeriod::Year.new(self.begin)
       end
     end
   end

@@ -76,4 +76,27 @@ class TestDay < Minitest::Test
     assert_equal ActivePeriod::Year.new('01/01/2017'),
                  ActivePeriod::Day.new('01/01/2017').year
   end
+
+  def test_no_method_error
+    period = ActivePeriod::Day.new('01/01/2017')
+    assert_raises NoMethodError do
+      period.day
+    end
+    assert_raises NoMethodError do
+      period.days
+    end
+    assert_raises NoMethodError do
+      period.weeks
+    end
+    assert_raises NoMethodError do
+      period.months
+    end
+    assert_raises NoMethodError do
+      period.quarters
+    end
+    assert_raises NoMethodError do
+      period.years
+    end
+  end
+
 end

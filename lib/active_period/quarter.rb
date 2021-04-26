@@ -38,8 +38,5 @@ module ActivePeriod
              year:        from.year)
     end
 
-    def enumerable_date
-      from
-    end
   end
 end

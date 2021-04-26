@@ -1,21 +1,27 @@
 fr:
-  period:
+  active_period:
     included: inclus
     excluded: exclue
+    comparable:
+      incomparable_error:               Les arguments ne sont pas comparables
+    collection:
+      param_klass_must_be_a_standard_period:  Le paramètre doit hériter de la class StandardPeriod
+      param_period_must_be_a_period:          Le paramètre doit hériter de la class Period
+    period:
+      base_class_is_abstract:           Period est une class abstraite qui ne doit pas être utiliser directement
+      begin_date_is_invalid:            Date de début invalide
+      end_date_is_invalid:              Date de fin invalide
+      start_is_equal_to_end_excluded:   La date de début et de fin ne peuvent pas être égale quand la date de fin est exclue
+      start_is_greater_than_end:        Date de début supérieur à la date de fin
+      param_must_be_a_range:            Le paramètre doit hériter de la class Range
     free_period:
       default_format:                   Du %{from} au %{to} %{ending}
       beginless_format:                 Jusqu'au %{from} %{ending}
       endless_format:                   Depuis le %{to}
       boundless_format:                 Sans limite de temps
-      begin_date_is_invalid:            Date de début invalide
-      end_date_is_invalid:              Date de fin invalide
-      endless_excluded_end_is_forbiden: Impossible d'exclure le dernier jours d'une periode sans fin
-      start_is_equal_to_end_excluded:   La date de début et de fin ne peuvent pas être égale quand la date de fin est exclue
-      start_is_greater_than_end:        Date de début supérieur à la date de fin
-      incomparable_error:               Les arguments ne sont pas comparables
-      param_must_be_a_range:            Le paramètre doit hériter de la class Range
     standard_period:
-      base_class_id_abstract:     StandardPeriod est une class abstraite qui ne doit pas être utiliser directement
+      base_class_is_abstract:     StandardPeriod est une class abstraite qui ne doit pas être utiliser directement
+      date_is_invalid:            La date est invalide
       day:
         default_format: '%{wday} %{day} %{month} %{year}'
       week:
@@ -26,8 +32,6 @@ fr:
         default_format: '%{quarter_nb} semestre %{year}'
       year:
         default_format: '%{year}'
-  collection:
-    param_must_be_a_standard_period:  Le paramètre doit hériter de la class StandardPeriod
   date:
     month_names:
     -

@@ -18,9 +18,8 @@ class TestFreePeriod < Minitest::Test
     assert_raises ArgumentError do
       Period.new 42
     end
-    assert_raises ArgumentError do
-      Period.new 42..451
-    end
+    assert_kind_of ActivePeriod::FreePeriod, Period.new(42..451)
+
     assert_raises ArgumentError do
       Period.new '01/01/2021'..'10/10/2020'
     end
@@ -42,6 +41,10 @@ class TestFreePeriod < Minitest::Test
     assert_raises ArgumentError do
       Period.new(''..'01/01/2020', allow_beginless: false)
     end
+
+    assert_kind_of ActivePeriod::FreePeriod, Period.new('01/01/2020'..'')
+    assert_kind_of ActivePeriod::FreePeriod, Period.new(..'01/01/2020')
+    assert_kind_of ActivePeriod::FreePeriod, Period.new(''..)
 
     assert_equal period, range_to_period
   end
@@ -129,5 +132,37 @@ class TestFreePeriod < Minitest::Test
     I18n.locale = :en
   end
 
+  def test_has_many_days
+  end
+
+  def test_has_many_weeks
+  end
+
+  def test_has_many_months
+  end
+
+  def test_has_many_quarters
+  end
+
+  def test_has_many_yearss
+  end
+
+  def test_no_method_error
+    assert_raises NoMethodError do
+      period.day
+    end
+    assert_raises NoMethodError do
+      period.week
+    end
+    assert_raises NoMethodError do
+      period.month
+    end
+    assert_raises NoMethodError do
+      period.quarter
+    end
+    assert_raises NoMethodError do
+      period.year
+    end
+  end
 
 end

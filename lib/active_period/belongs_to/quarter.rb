@@ -5,7 +5,7 @@ module ActivePeriod
     # FreePeriod
     module Quarter
       def quarter
-        ActivePeriod::Quarter.new(enumerable_date)
+        ActivePeriod::Quarter.new(self.begin)
       end
     end
   end

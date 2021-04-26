@@ -1,16 +1,9 @@
-require_relative 'has_many.rb'
-require_relative 'has_many/days.rb'
-require_relative 'has_many/weeks.rb'
-require_relative 'has_many/months.rb'
-require_relative 'has_many/quarters.rb'
-require_relative 'has_many/years.rb'
-
 module ActivePeriod
-  class StandardPeriod < ActivePeriod::FreePeriod
+  class StandardPeriod < ActivePeriod::Period
 
     def initialize(object)
-      raise I18n.t(:base_class_id_abstract, scope: %i[period standard_period]) if self.class == StandardPeriod
-      time = time_parse(object, I18n.t(:date_is_invalid, scope: %i[period standard_period]) )
+      raise I18n.t(:base_class_id_abstract, scope: %i[active_period standard_period]) if self.class == StandardPeriod
+      time = time_parse(object, I18n.t(:date_is_invalid, scope: %i[active_period standard_period]) )
       super(time.send("beginning_of_#{_period}")..time.send("end_of_#{_period}"))
     end
 
@@ -51,28 +44,8 @@ module ActivePeriod
       self.class.new(to + duration)
     end
 
-    # @raise NotImplementedError This method must be implemented id daughter class
-    def strftime
-      raise NotImplementedError
-    end
-
-    # @raise NotImplementedError This method must be implemented id daughter class
-    def to_s
-      raise NotImplementedError
-    end
-
-    # @raise NotImplementedError This method must be implemented id daughter class
-    def i18n
-      raise NotImplementedError
-    end
-
-    # @raise NotImplementedError This method must be implemented id daughter class
-    def enumerable_date
-      raise NotImplementedError
-    end
-
     def i18n_scope
-      [:period, :standard_period, _period]
+      [:active_period, :standard_period, _period]
     end
   end
 end

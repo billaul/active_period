@@ -83,4 +83,26 @@ class TestYear < Minitest::Test
     assert_equal 4,
                  ActivePeriod::Year.new('01/01/2017').quarters.count
   end
+
+  def test_no_method_error
+    period = ActivePeriod::Year.new('01/01/2017')
+    assert_raises NoMethodError do
+      period.day
+    end
+    assert_raises NoMethodError do
+      period.week
+    end
+    assert_raises NoMethodError do
+      period.month
+    end
+    assert_raises NoMethodError do
+      period.quarter
+    end
+    assert_raises NoMethodError do
+      period.year
+    end
+    assert_raises NoMethodError do
+      period.years
+    end
+  end
 end

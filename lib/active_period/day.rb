@@ -30,8 +30,4 @@ class ActivePeriod::Day < ActivePeriod::StandardPeriod
            year:    from.year)
   end
 
-  def enumerable_date
-    from
-  end
-
 end

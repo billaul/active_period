@@ -7,7 +7,7 @@ module ActivePeriod
       include ActivePeriod::HasMany
 
       def weeks
-        @quarters ||= ActivePeriod::Collection.new(ActivePeriod::Week, self)
+        @weeks ||= ActivePeriod::Collection.new(ActivePeriod::Week, self)
       end
 
     end

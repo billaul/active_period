@@ -1,21 +1,26 @@
 en:
-  period:
+  active_period:
     included: included
     excluded: excluded
+    comparable:
+      incomparable_error:               Cannot compare Arguments
+    collection:
+      param_klass_must_be_a_standard_period:  The parameter klass must inherit from the StandardPeriod class
+      param_period_must_be_a_period:          The parameter perod must inherit from the Period class
+    period:
+      base_class_is_abstract:           Period is not intended to be used directly
+      begin_date_is_invalid:            The start date is invalid
+      end_date_is_invalid:              The end date is invalid
+      start_is_equal_to_end_excluded:   The start date and end date cannot be equal when the end date is excluded
+      start_is_greater_than_end:        The start date is greater than the end date
+      param_must_be_a_range:            The parameter must inherit from the Range class
     free_period:
       default_format:                   From the %{from} to the %{to} %{ending}
       beginless_format:                 Until the %{to} %{ending}
       endless_format:                   From the %{from}
       boundless_format:                 Limitless time range
-      begin_date_is_invalid:            The start date is invalid
-      end_date_is_invalid:              The end date is invalid
-      endless_excluded_end_is_forbiden: It's impossible to exclude the last day of an endless range
-      start_is_equal_to_end_excluded:   The start date and end date cannot be equal when the end date is excluded
-      start_is_greater_than_end:        The start date is greater than the end date
-      incomparable_error:               Cannot compare Arguments
-      param_must_be_a_range:            The parameter must inherit from the Range class
     standard_period:
-      base_class_id_abstract:     StandardPeriod is not intended to be used directly
+      base_class_is_abstract:     StandardPeriod is not intended to be used directly
       date_is_invalid:            The date is invalid
       day:
         default_format: '%{wday} %{day} %{month} %{year}'
@@ -27,6 +32,3 @@ en:
         default_format: '%{quarter_nb} quarter %{year}'
       year:
         default_format: '%{year}'
-    collection:
-      param_klass_must_be_a_standard_period:  The parameter klass must inherit from the StandardPeriod class
-      param_period_must_be_a_free_period:  The parameter perod must inherit from the FreePeriod class
