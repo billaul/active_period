@@ -300,7 +300,7 @@ If your Period [begin in a time zone and end in another](https://en.wikipedia.or
 
 - [ ] ActiveRecord Serializer (maybe)
 - [ ] Ruby 3 & Rails 6 support
-- [ ] Holidays support
+- [ ] Holidays support (gem Holidays)
 
 ## Bug reports
 
