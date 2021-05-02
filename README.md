@@ -117,7 +117,7 @@ Period.month('01/01/2000').next.next.next
 # Return the month of April 2020
 ```
 
-You can quickly access close period of time with `.(last|this|next)_(day|week|month|quarter|year)` and `.yesterday` `.today` `.tomorrow`
+You can quickly access convenient periods of time with `.(last|this|next)_(day|week|month|quarter|year)` and `.yesterday` `.today` `.tomorrow`
 
 ```ruby
 Period.this_week
