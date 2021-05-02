@@ -5,7 +5,6 @@ fr:
     comparable:
       incomparable_error:               Les arguments ne sont pas comparables
     collection:
-      param_klass_must_be_a_standard_period:  Le paramètre doit hériter de la class StandardPeriod
       param_period_must_be_a_period:          Le paramètre doit hériter de la class Period
     period:
       base_class_is_abstract:           Period est une class abstraite qui ne doit pas être utiliser directement
@@ -32,6 +31,9 @@ fr:
         default_format: '%{quarter_nb} semestre %{year}'
       year:
         default_format: '%{year}'
+    holiday_period:
+      gem_require: 'La gem "holidays" est requise pour activer cette fonctionnalitée'
+      default_format: '%{name} - %{wday} %{day} %{month} %{year}'
   date:
     month_names:
     -

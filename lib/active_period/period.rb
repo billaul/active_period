@@ -1,5 +1,9 @@
+require_relative 'comparable.rb'
+require_relative 'has_many/holidays.rb'
+
 class ActivePeriod::Period < Range
   include ActivePeriod::Comparable
+  include ActivePeriod::HasMany::Holidays
 
   # @author Lucas Billaudot <billau_l@modulotech.fr>
   # @param range [Range] A valid range

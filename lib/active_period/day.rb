@@ -30,4 +30,9 @@ class ActivePeriod::Day < ActivePeriod::StandardPeriod
            year:    from.year)
   end
 
+  def holiday?(...)
+    raise I18n.t(:gem_require, scope: %i[active_period holiday_period]) unless Object.const_defined?('Holidays')
+    holidays(...).first.present?
+  end
+
 end

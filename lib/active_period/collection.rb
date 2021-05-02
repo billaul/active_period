@@ -19,7 +19,6 @@ module ActivePeriod
     end
 
     def initialize(klass, period)
-      raise I18n.t(:param_klass_must_be_a_standard_period, scope: %i[active_period collection]) unless klass.ancestors.include?(ActivePeriod::StandardPeriod)
       raise I18n.t(:param_period_must_be_a_period, scope: %i[active_period collection]) unless period.class.ancestors.include?(ActivePeriod::Period)
 
       @klass  = klass

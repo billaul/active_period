@@ -5,8 +5,7 @@ en:
     comparable:
       incomparable_error:               Cannot compare Arguments
     collection:
-      param_klass_must_be_a_standard_period:  The parameter klass must inherit from the StandardPeriod class
-      param_period_must_be_a_period:          The parameter perod must inherit from the Period class
+      param_period_must_be_a_period:    The parameter perod must inherit from the Period class
     period:
       base_class_is_abstract:           Period is not intended to be used directly
       begin_date_is_invalid:            The beginning date is invalid
@@ -32,3 +31,6 @@ en:
         default_format: '%{quarter_nb} quarter %{year}'
       year:
         default_format: '%{year}'
+    holiday_period:
+      gem_require: 'The gem "holidays" is needed for this feature to work'
+      default_format: '%{name} - %{wday} %{day} %{month} %{year}'
