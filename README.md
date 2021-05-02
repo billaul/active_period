@@ -64,14 +64,19 @@ You can declare **FreePeriod** as simply as :
 ```ruby
 # With Date objects
 Period.new(3.month.ago..Date.today)
+
 # or with Strings
 Period.new('01/01/2000'...'01/02/2000')
+
 # or with a mix
 Period.new('01/01/2000'..1.week.ago)
+
 # with one bound only
 Period.new('01/01/2000'..)
+
 # or in a rails Controller with params
 Period.new(params[:start_date]..params[:end_date])
+
 # or from a range
 ('01/01/2000'...'01/02/2000').to_period
 ```
@@ -94,10 +99,13 @@ These periods are `day`, `week`, `month`, `quarter` and `year`
 ```ruby
 # To get the week, 42th day ago
 Period.week(42.day.ago)
+
 # To get the first month of 2020
 Period.month('01/01/2020')
+
 # or if you like it verbious
 ActivePeriod::Month.new('01/01/2020')
+
 # or if you need the current week
 Period.week(Time.now)
 ```
@@ -109,9 +117,11 @@ Period.week(Time.now)
 # Subtraction are made from the start of the period
 Period.month('10/02/2000') - 1.day
 # Return the previous month
+
 # Addition are made from the end
 Period.month('10/02/2000') + 1.day
 # Return the next month
+
 Period.week('10/02/2000') + 67.day
 # Return a week
 ```
@@ -126,10 +136,13 @@ You can quickly access convenient periods of time with `.(last|this|next)_(day|w
 ```ruby
 Period.this_week
 # Same as Period.week(Time.now) but shorter
+
 Period.next_month
 # Return the next month
+
 Period.last_year
 # Return the last year
+
 Period.today
 # No comment
 ```
@@ -155,10 +168,13 @@ These methods return an **ActivePeriod::Collection** implementing **Enumerable**
 ```ruby
 # The FreePeriod from 01/01/2021 to 01/02/2021 has 5 weeks
 Period.new('01/01/2021'...'01/02/2021').weeks.count # 5
+
 # The StandardPeriod::Month for 01/01/2021 has 4 weeks
 Period.month('01/01/2021').weeks.count # 4
+
 # How many day in the current quarter
 Period.this_quarter.days.count
+
 # Get all the quarters overlapping a Period of time
 Period.new(Time.now..2.month.from_now).quarters.to_a
 ```
@@ -227,6 +243,7 @@ As **Period** inherit from **Range**, you can natively use them in **ActiveRecor
 ```ruby
 # Get all book published this year
 Book.where(published_at: Period.this_year)
+
 # Get all users created after 01/01/2020
 User.where(created_at: ('01/01/2020'..).to_period)
 ```
@@ -257,6 +274,7 @@ I18n is supported for `en` and `fr`
 ```ruby
 Period.new('01/01/2000'...'01/02/2001').to_s
 => "From the 01 January 2000 to the 31 January 2001 included"
+
 I18n.locale = :fr
 Period.new('01/01/2000'...'01/02/2001').to_s
 => "Du 01 janvier 2000 au 31 janvier 2001 inclus"
@@ -265,9 +283,11 @@ Errors are also supported
 ```ruby
 Period.new 'Foo'..'Bar'
 => ArgumentError (The start date is invalid)
+
 Period.new '01/02/3030'..'Bar'
 Period.bounded '01/02/3030'..
 => ArgumentError (The end date is invalid)
+
 Period.new '01/02/3030'..'01/01/2020'
 => ArgumentError (The start date is greater than the end date)
 ```
