@@ -299,8 +299,7 @@ If your Period [begin in a time zone and end in another](https://en.wikipedia.or
 ## Planned updates
 
 - [ ] ActiveRecord Serializer (maybe)
-- [ ] Ruby 3 & Rails 6 support
-- [ ] Holidays support (gem Holidays)
+- [ ] Holidays support (gem Holidays) -> COMING SOON
 
 ## Bug reports
 
