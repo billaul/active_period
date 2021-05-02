@@ -1,4 +1,8 @@
-# ActivePeriod [![Gem Version](https://badge.fury.io/rb/active_period.svg)](https://badge.fury.io/rb/active_period) [![Code Climate](https://codeclimate.com/github/billaul/period.svg)](https://codeclimate.com/github/billaul/period) [![Inline docs](http://inch-ci.org/github/billaul/period.svg)](http://inch-ci.org/github/billaul/period)
+# ActivePeriod 
+[![Gem Version](https://badge.fury.io/rb/active_period.svg)](https://badge.fury.io/rb/active_period) 
+[![Code Climate](https://codeclimate.com/github/billaul/period.svg)](https://codeclimate.com/github/billaul/period) 
+[![Inline docs](http://inch-ci.org/github/billaul/period.svg)](http://inch-ci.org/github/billaul/period) 
+[![RubyGems](http://img.shields.io/gem/dt/active_period.svg?style=flat)](http://rubygems.org/gems/active_period)
 
 ActivePeriod aims to simplify Time-range manipulation.
 
