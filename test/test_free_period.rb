@@ -133,18 +133,26 @@ class TestFreePeriod < Minitest::Test
   end
 
   def test_has_many_days
+    assert Period.new('01/01/2021'...'01/02/2021').days.count == 31
   end
 
   def test_has_many_weeks
+    assert Period.new('01/01/2021'...'01/02/2021').weeks.count == 5
   end
 
   def test_has_many_months
+    assert Period.new('01/01/2021'...'01/02/2021').months.count == 1
+    assert Period.new('01/01/2021'..'01/02/2021').months.count == 2
   end
 
   def test_has_many_quarters
+    assert Period.new('01/01/2021'...'01/04/2021').quarters.count == 1
+    assert Period.new('01/01/2021'..'01/04/2021').quarters.count == 2
   end
 
-  def test_has_many_yearss
+  def test_has_many_years
+    assert Period.new('01/01/2021'...'01/01/2022').years.count == 1
+    assert Period.new('01/01/2021'..'01/01/2022').years.count == 2
   end
 
   def test_no_method_error
@@ -162,6 +170,44 @@ class TestFreePeriod < Minitest::Test
     end
     assert_raises NoMethodError do
       period.year
+    end
+  end
+
+  def test_include
+    # Januart 2021
+    this = Period.new('01/01/2021'...'01/02/2021')
+    this.weeks.each do |week|
+      if week == this.weeks.first
+        assert !this.include?(week)
+      else
+        assert this.include?(week)
+      end
+    end
+
+    # February 2021
+    this = Period.new('01/02/2021'...'01/03/2021')
+    this.weeks.each do |week|
+      assert this.include?(week)
+    end
+
+    # March 2021
+    this = Period.new('01/03/2021'...'01/04/2021')
+    this.weeks.each do |week|
+      if week == this.weeks.last
+        assert !this.include?(week)
+      else
+        assert this.include?(week)
+      end
+    end
+
+    # April 2021
+    this = Period.new('01/04/2021'...'01/05/2021')
+    this.weeks.each do |week|
+      if week == this.weeks.first || week == this.weeks.last
+        assert !this.include?(week)
+      else
+        assert this.include?(week)
+      end
     end
   end
 

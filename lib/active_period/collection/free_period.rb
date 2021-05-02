@@ -10,7 +10,7 @@ module ActivePeriod
 
         Enumerator.new do |yielder|
           current = klass.new(period.begin)
-          while period.calculated_end.nil? || current.calculated_end <= period.calculated_end
+          while period.calculated_end.nil? || period.include?(current.begin) || period.include?(current.calculated_end)
             yielder << current
             current = current.next
           end
@@ -24,7 +24,7 @@ module ActivePeriod
 
         Enumerator.new do |yielder|
           current = klass.new(period.end)
-          while period.begin.nil? || current.begin >= period.begin
+          while period.begin.nil? || period.include?(current.begin) || period.include?(current.calculated_end)
             yielder << current
             current = current.prev
           end

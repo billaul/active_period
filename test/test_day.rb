@@ -3,6 +3,12 @@ require 'active_period'
 
 class TestDay < Minitest::Test
   # Day object
+  def test_new_day_from_period_module
+    assert_instance_of ActivePeriod::Day,
+                       Period.today
+    assert_equal ActivePeriod::Day.new(Date.today), Period.today
+  end
+
   def test_new_day_form_string
     assert_instance_of ActivePeriod::Day,
                        ActivePeriod::Day.new('01/01/2017')
@@ -97,6 +103,30 @@ class TestDay < Minitest::Test
     assert_raises NoMethodError do
       period.years
     end
+  end
+
+  def test_include
+    this = Period.today
+    assert  this.include?(Period.today)
+    assert !this.include?(Period.yesterday)
+    assert !this.include?(Period.tomorrow)
+
+    assert !this.include?(Period.this_week)
+    assert !this.include?(Period.this_month)
+    assert !this.include?(Period.this_quarter)
+    assert !this.include?(Period.this_year)
+  end
+
+  def test_included
+    this = Period.today
+    assert  Period.today.include?(this)
+    assert !Period.yesterday.include?(this)
+    assert !Period.tomorrow.include?(this)
+
+    assert  Period.this_week.include?(this)
+    assert  Period.this_month.include?(this)
+    assert  Period.this_quarter.include?(this)
+    assert  Period.this_year.include?(this)
   end
 
 end

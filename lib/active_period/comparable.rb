@@ -27,19 +27,11 @@ module ActivePeriod
 
     private
 
-    # SI self day ou free < 7.jours
-    # ET other week
-    # ALORS include -> false
-    # MAIS enumerator se sert de include et donc
-    # self free < 7.jours SHOULD incldue week
-    # Et en même temps non ><
-
     def include_period?(other)
-      # TODO rewite this / make it more generic
-      if (self.is_a?(Month) || self.is_a?(Quarter) || self.is_a?(Year)) && other.is_a?(Week)
+      if self.class.in?([Month, Quarter, Year]) && other.is_a?(Week)
         self.include_time?(other.include_date)
-      elsif (other.is_a?(Month) || other.is_a?(Quarter) || other.is_a?(Year)) && self.is_a?(Week)
-        other.include?(self.include_date)
+      # elsif (other.class.in?([Month, Quarter, Year]) && self.is_a?(Week)
+      #   other.include_time?(self.include_date)
       else
         self.include_time?(other.begin) && self.include_time?(other.calculated_end)
       end
@@ -51,7 +43,7 @@ module ActivePeriod
       return true if self.boundless?
       return true if self.endless? && self.begin <= other
       return true if self.beginless? && self.calculated_end >= other
-      return true if self.begin.to_i <= other.to_i && other.to_i <= self.end.to_i
+      return true if self.begin.to_i <= other.to_i && other.to_i <= self.calculated_end.to_i
       false
     end
 

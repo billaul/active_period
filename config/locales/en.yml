@@ -9,10 +9,10 @@ en:
       param_period_must_be_a_period:          The parameter perod must inherit from the Period class
     period:
       base_class_is_abstract:           Period is not intended to be used directly
-      begin_date_is_invalid:            The start date is invalid
-      end_date_is_invalid:              The end date is invalid
-      start_is_equal_to_end_excluded:   The start date and end date cannot be equal when the end date is excluded
-      start_is_greater_than_end:        The start date is greater than the end date
+      begin_date_is_invalid:            The beginning date is invalid
+      end_date_is_invalid:              The ending date is invalid
+      start_is_equal_to_end_excluded:   The beginning date and ending date cannot be equal when the ending date is excluded
+      start_is_greater_than_end:        The beginning date is greater than the ending date
       param_must_be_a_range:            The parameter must inherit from the Range class
     free_period:
       default_format:                   From the %{from} to the %{to} %{ending}

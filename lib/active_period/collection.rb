@@ -26,12 +26,35 @@ module ActivePeriod
       @period = period
     end
 
+    def second
+      find_nth(1)
+    end
+
+    def third
+      find_nth(2)
+    end
+
+    def fourth
+      find_nth(3)
+    end
+
+    def find_nth(limit)
+      each.with_index do |element, index|
+        return element if index == limit
+      end
+      return nil
+    end
+
     def each(&block)
       block_given? ? enumerator.each(&block) : enumerator
     end
 
     def reverse_each(&block)
       block_given? ? reverse_enumerator.each(&block) : reverse_enumerator
+    end
+
+    def last
+      reverse_each.first
     end
 
   end

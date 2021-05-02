@@ -3,6 +3,12 @@ require 'active_period'
 
 class TestWeek < Minitest::Test
   # Week object
+  def test_new_week_from_period_module
+    assert_instance_of ActivePeriod::Week,
+                       Period.this_week
+    assert_equal ActivePeriod::Week.new(Date.today), Period.this_week
+  end
+
   def test_new_week_form_string
     assert_instance_of ActivePeriod::Week,
                        ActivePeriod::Week.new('01/01/2017')
@@ -109,4 +115,29 @@ class TestWeek < Minitest::Test
     end
   end
 
+  def test_include
+    this = Period.this_week
+    assert  this.include?(Period.today)
+
+    assert  this.include?(Period.this_week)
+    assert !this.include?(Period.last_week)
+    assert !this.include?(Period.next_week)
+
+    assert !this.include?(this.month)
+    assert !this.include?(this.quarter)
+    assert !this.include?(this.year)
+  end
+
+  def test_included
+    this = Period.this_week
+    assert !Period.today.include?(this)
+
+    assert  Period.this_week.include?(this)
+    assert !Period.last_week.include?(this)
+    assert !Period.next_week.include?(this)
+
+    assert  this.month.include?(this)
+    assert  this.quarter.include?(this)
+    assert  this.year.include?(this)
+  end
 end

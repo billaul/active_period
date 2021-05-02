@@ -23,7 +23,7 @@ Or install it yourself as:
 **ActivePeriod** was designed to simplify time-range manipulation, specialy with rails (~> 5) and user input   
 
 **Warning** :
-- A time-range take place between two date and it's different from an abstract duration of time
+- A time-range take place between two **date** and it's different from an abstract duration of time
 - **ActivePeriod** is limited at full day of time and will always round the starting and ending to the beginning and the ending of the day
 
 
@@ -34,18 +34,19 @@ require 'active_period'
 # Get all user created today
 User.where(created_at: Period.today)
 
-# Get how many weeks there is from the beginning of time ?
-Period.new('01/01/1970'..Time.now).weeks.count
+# Get how many days there is from the Voyager 2 launch
+Period.new('20/07/1977'..Time.now).to_period.days.count
 
-# Is Trump still in charge ?
-Time.now.in? Period.new('20/01/2017'...'20/01/2021')
+# Are we in 2021 ?
+Time.now.in? Period.year('01/01/2021')
 
-# Get the week of an arbitrary date
-Period.week('24/04/1990')
+# Boundless period are also supported
+Period.new('24/04/1990'..).days.each # => Enumerable
+Period.new(..Time.now).months.reverse_each # => Enumerable
 
 # Write a date for me (I18n supported)
 Period.new('20/01/2017'...'20/01/2021').to_s
-=> "From the 20 January 2017 to the 19 January 2021 included"
+=> "From the 20 January 2017 to the 20 January 2021 excluded"
 ```
 
 ## Detailed view
@@ -63,11 +64,15 @@ Period.new(3.month.ago..Date.today)
 Period.new('01/01/2000'...'01/02/2000')
 # or with a mix
 Period.new('01/01/2000'..1.week.ago)
+# with one bound only
+Period.new('01/01/2000'..)
 # or in a rails Controller with params
 Period.new(params[:start_date]..params[:end_date])
 # or from a range
 ('01/01/2000'...'01/02/2000').to_period
 ```
+
+**Note** : `to_period` will always return a **FreePeriod**
 
 **FreePeriod** can be manipulated with `+` and `-`          
 Doing so will move the start **and** the end of the period   
@@ -77,7 +82,7 @@ Period.new('01/01/2000'..'05/01/2000') + 3.day
 Period.new('04/01/2000'..'08/01/2000')
 ```
 
-### Standard Period of time
+### StandardPeriod of time
 
 Using **StandardPeriod** you are limited to strictly bordered periods of time      
 These periods are `day`, `week`, `month`, `quarter` and `year`
@@ -128,7 +133,6 @@ Period.today
 ## HasMany
 
 **FreePeriod** and some **StandardPeriod** respond to `.days`, `.weeks`, `.months`, `.quarters` and `.years`    
-These methods return an **ActivePeriod::Collection** of **StandardPeriod** who are overlapping the current period
 
 | HasMany -> [\<StandardPeriod>] | .days | .weeks | .months | .quarters | .years |
 |-------------------------------|:----:|:-----:|:------:|:--------:|:-----:|
@@ -139,10 +143,16 @@ These methods return an **ActivePeriod::Collection** of **StandardPeriod** who a
 | StandardPeriod::Quarter       |   X  |   X   |    X   |          |       |
 | StandardPeriod::Year          |   X  |   X   |    X   |     X    |       |
 
+Called from a **FreePeriod** all overlapping **StandardPeriod** are return     
+Called from a **StandardPeriod** only strictly included **StandardPeriod** are return     
+These methods return an **ActivePeriod::Collection** implementing **Enumerable**
+
 #### Example
 ```ruby
-# Get how many weeks there is from the beginning of time ?
-Period.new('01/01/1970'..Time.now).weeks.count
+# The FreePeriod from 01/01/2021 to 01/02/2021 has 5 weeks
+Period.new('01/01/2021'...'01/02/2021').weeks.count # 5
+# The StandardPeriod::Month for 01/01/2021 has 4 weeks
+Period.month('01/01/2021').weeks.count # 4
 # How many day in the current quarter
 Period.this_quarter.days.count
 # Get all the quarters overlapping a Period of time
@@ -167,17 +177,54 @@ These methods return a **StandardPeriod** who include the current period
 #### Example with BelongTo and HasMany
 
 ```ruby
-# Get the first day, of the last week, of the second month, of the current year
-Period.this_year.months.second.weeks.last.days.first
+# Get the third day, of the last week, of the second month, of the current year
+Period.this_year.months.second.weeks.last.days.third
+```
+
+## Boundless Period
+
+Boundless period are fully supported and work as you expect them to do    
+The values `nil`, `''`, `Date::Infinity`, `Float::INFINITY` and `-Float::INFINITY` are supported as start and end
+You can iterate on the `days`, `weeks`, `months`, `quarters` and `years` of an Endless period
+```ruby
+('01/01/2021'..nil).days.each { ... }
+('01/01/2021'..'').days.each { ... }
+('01/01/2021'..).days.each { ... }
+```
+You can reverse iterate on the `days`, `weeks`, `months`, `quarters` and `years` of an Beginless period
+```ruby
+(nil..'01/01/2021').days.reverse_each { ... }
+(''..'01/01/2021').days.reverse_each { ... }
+(..'01/01/2021').days.reverse_each { ... }
+```
+
+You can create an infinite period of time     
+Obviously it's not iterable
+```ruby
+Period.new(nil..nil).to_s
+#=> "Limitless time range"
+```
+
+You can specifically forbid boundless period with `allow_endless`, `allow_beginless` or with `Period.bounded`
+```ruby
+Period.new('01/01/2020'..'', allow_endless: false)
+Period.bounded('01/01/2020'..)
+#=> ArgumentError (The end date is invalid)
+
+Period.new(..'01/01/2020', allow_beginless: false)
+Period.bounded(..'01/01/2020')
+#=> ArgumentError (The start date is invalid)
 ```
 
 ## ActiveRecord
 
-As **Period** inherite from **Range**, you can natively use them in **ActiveRecord** query
+As **Period** inherit from **Range**, you can natively use them in **ActiveRecord** query
 
 ```ruby
 # Get all book published this year
 Book.where(published_at: Period.this_year)
+# Get all users created after 01/01/2020
+User.where(created_at: ('01/01/2020'..).to_period)
 ```
 
 ## Rails Controller
@@ -186,17 +233,13 @@ In a Controller, use the error handling to validate the date for you
 
 ```ruby
 class BookController < ApplicationController
-  def between # match via GET and POST
-    # Default value for the range in GET context
-    params[:from] ||= 1.month.ago
-    params[:to]   ||= Time.now
-
+  def between
     begin
       # Retrieve books from the DB
-      @books = Book.where(published: Period.new(params[:from]..params[:to]))
+      @books = Book.where(published: Period.bounded(params[:from]..params[:to]))
     rescue ArgumentError => e
       # Period will handle mis-formatted date and incoherent period
-      # I18n is support for errors messages
+      # I18n is supported for errors messages
       flash[:alert] = e.message
     end
   end
@@ -219,6 +262,7 @@ Errors are also supported
 Period.new 'Foo'..'Bar'
 #=> ArgumentError (The start date is invalid)
 Period.new '01/02/3030'..'Bar'
+Period.bounded '01/02/3030'..
 #=> ArgumentError (The end date is invalid)
 Period.new '01/02/3030'..'01/01/2020'
 #=> ArgumentError (The start date is greater than the end date)
@@ -235,7 +279,7 @@ If you need to change the format for a single call
 ```
 For a FreePeriod or if you need to print the start and the end of your period differently, use `.i18n`
 ```ruby
-  period.i18n do |from, to|
+  period.i18n do |from, to, exclude_end|
     "You have from #{from.strftime(...)} until #{to.strftime(...)} to deliver the money !"
   end
 ```
@@ -253,11 +297,9 @@ If your Period [begin in a time zone and end in another](https://en.wikipedia.or
 
 ## Planned updates
 
-- [x] Boundless Period support -> from date until forever / from beginning of time to date
 - [ ] ActiveRecord Serializer
 - [ ] Rails 6 support
 - [ ] Ruby 3 support
-- [x] implement ActivePeriod::Collection Period.this_year.days -> ActivePeriod::Collection
 - [ ] Holiday support
 
 ## Bug reports

@@ -1,6 +1,10 @@
 module Period
-  def self.new(range)
-    ActivePeriod::FreePeriod.new(range)
+  def self.new(*args)
+    ActivePeriod::FreePeriod.new(*args)
+  end
+
+  def self.bounded(range)
+    ActivePeriod::FreePeriod.new(range, allow_beginless: false, allow_endless: false)
   end
 
   def self.env_time

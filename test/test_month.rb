@@ -129,4 +129,30 @@ class TestMonth < Minitest::Test
       period.years
     end
   end
+
+  def test_include
+    this = Period.this_month
+    assert  this.include?(Period.today)
+    assert  this.include?(this.weeks.first)
+
+    assert  this.include?(Period.this_month)
+    assert !this.include?(Period.last_month)
+    assert !this.include?(Period.next_month)
+
+    assert !this.include?(Period.this_quarter)
+    assert !this.include?(Period.this_year)
+  end
+
+  def test_included
+    this = Period.this_month
+    assert !Period.today.include?(this)
+    assert !this.weeks.first.include?(this)
+
+    assert  Period.this_month.include?(this)
+    assert !Period.last_month.include?(this)
+    assert !Period.next_month.include?(this)
+
+    assert  Period.this_quarter.include?(this)
+    assert  Period.this_year.include?(this)
+  end
 end
