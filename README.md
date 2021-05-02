@@ -288,11 +288,12 @@ For a FreePeriod or if you need to print the start and the end of your period di
 
 Weeks are implemented following the [ISO 8601](https://en.wikipedia.org/wiki/ISO_week_date)      
 So `Period.this_month.weeks.first` doesn't necessarily include the first days of the month
+Also a **StandardPeriod** and a **FreePeriod** covering the same range of time, may not includes the same `Weeks`
 
 ## TimeZone
 
-Time zone are supported, you have nothing to do   
-If you change the global `Time.zone` of your app, you have nothing to do    
+Time zone are supported
+If you change the global `Time.zone` of your app
 If your Period [begin in a time zone and end in another](https://en.wikipedia.org/wiki/Daylight_saving_time), you have nothing to do
 
 ## Planned updates
