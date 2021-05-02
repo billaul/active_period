@@ -35,7 +35,7 @@ require 'active_period'
 User.where(created_at: Period.today)
 
 # Get how many days there is from the Voyager 2 launch
-Period.new('20/07/1977'..Time.now).to_period.days.count
+('20/07/1977'..Time.now).to_period.days.count
 
 # Are we in 2021 ?
 Time.now.in? Period.year('01/01/2021')
@@ -279,7 +279,7 @@ If you need to change the format for a single call
 ```
 For a FreePeriod or if you need to print the start and the end of your period differently, use `.i18n`
 ```ruby
-  period.i18n do |from, to, exclude_end|
+  period.i18n do |from, to, excluded_end|
     "You have from #{from.strftime(...)} until #{to.strftime(...)} to deliver the money !"
   end
 ```
