@@ -202,18 +202,18 @@ You can create an infinite period of time
 Obviously it's not iterable
 ```ruby
 Period.new(nil..nil).to_s
-#=> "Limitless time range"
+=> "Limitless time range"
 ```
 
 You can specifically forbid boundless period with `allow_endless`, `allow_beginless` or with `Period.bounded`
 ```ruby
 Period.new('01/01/2020'..'', allow_endless: false)
 Period.bounded('01/01/2020'..)
-#=> ArgumentError (The end date is invalid)
+=> ArgumentError (The end date is invalid)
 
 Period.new(..'01/01/2020', allow_beginless: false)
 Period.bounded(..'01/01/2020')
-#=> ArgumentError (The start date is invalid)
+=> ArgumentError (The start date is invalid)
 ```
 
 ## ActiveRecord
@@ -260,12 +260,12 @@ Period.new('01/01/2000'...'01/02/2001').to_s
 Errors are also supported
 ```ruby
 Period.new 'Foo'..'Bar'
-#=> ArgumentError (The start date is invalid)
+=> ArgumentError (The start date is invalid)
 Period.new '01/02/3030'..'Bar'
 Period.bounded '01/02/3030'..
-#=> ArgumentError (The end date is invalid)
+=> ArgumentError (The end date is invalid)
 Period.new '01/02/3030'..'01/01/2020'
-#=> ArgumentError (The start date is greater than the end date)
+=> ArgumentError (The start date is greater than the end date)
 ```
 
 See `locales/en.yml` to implement your language support
