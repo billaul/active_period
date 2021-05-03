@@ -3,9 +3,6 @@ require 'active_period'
 
 class TestFreePeriod < Minitest::Test
 
-  # TODO
-  # Write tests for every has_many relations
-
   def period
     Period.new '01/01/2020'..'10/10/2020'
   end
