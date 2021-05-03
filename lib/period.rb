@@ -48,6 +48,7 @@ module Period
     # Experimental non-documented feature
     # Inpired form ActiveRecord dynamic find_by_x like User.find_by_name
     # Example: Period.last_3_weeks_from_now == Period.mew(2.weeks.ago.beginning_of_week..Time.now.end_of_week)
+    # Note : Maybe it should return a collection of StandardPeriod
     def method_missing(method_name, *arguments, &block)
       super unless method_name.match?(/(last|next)_\d+_(day|week|month|quarter|year)s?(_from_now)?/)
       last_next, count, klass = method_name.to_s.split('_')
