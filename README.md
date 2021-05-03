@@ -333,17 +333,17 @@ require 'holidays'
 # Get all worldwide holidays in the current month
 Period.this_month.holidays
 
-# Get all US holidays in the current month
-Period.this_month.holidays(:us)
+# Get all US holidays in the next week
+Period.next_week.holidays(:us)
 
-# Get all US and CA holidays in the current month
-Period.this_month.holidays(:us, :ca)
+# Get all US and CA holidays in the prev quarter
+Period.prev_quarter.holidays(:us, :ca)
 
 # First up coming `FR` holiday
-holiday = Period.new(Time.now..).holidays(:fr).first
-# return the next holiday within the same options of the original `.holidays` collection
+holiday = (Time.now..).to_period.holidays(:fr).first
+# return the next holiday with same options as the original `.holidays` collection
 holiday.next
-# return the previous holiday within the same options of the original `.holidays` collection
+# return the previous holiday with same options as the original `.holidays` collection
 holiday.prev
 ```
 
@@ -356,7 +356,6 @@ Period.this_month.holidays
 ## Planned updates
 
 - [ ] ActiveRecord Serializer (maybe)
-- [ ] Holidays support (gem Holidays) -> COMING SOON
 
 ## Bug reports
 
