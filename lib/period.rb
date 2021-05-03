@@ -36,6 +36,9 @@ module Period
     alias tomorrow next_day
     alias today this_day
 
+    # Experimental non-documented feature
+    # Inpired form ActiveRecord dynamic find_by_x like User.find_by_name
+    # Example: Period.last_3_weeks_from_now == Period.mew(2.weeks.ago.beginning_of_week..Time.now.end_of_week)
     def method_missing(method_name, *arguments, &block)
       super unless method_name.match?(/(last|next)_\d+_(day|week|month|quarter|year)s?(_from_now)?/)
       last_next, count, klass = method_name.to_s.split('_')
