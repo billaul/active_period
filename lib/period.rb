@@ -21,23 +21,23 @@ module Period
   # and `.yesterday` `.today` `.tomorrow`
   # TODO implement (last|next)_holiday
   class << self
-    %i[day week month quarter year].each do |period|
-      define_method "last_#{period}" do
-        date = env_time.now.send(period == :day ? 'yesterday' : "last_#{period}")
-        Object.const_get("ActivePeriod::#{period.capitalize}").new(date)
+    %i[day week month quarter year].each do |standard_period|
+      define_method "last_#{standard_period}" do
+        date = env_time.now.send(standard_period == :day ? 'yesterday' : "last_#{standard_period}")
+        Object.const_get("ActivePeriod::#{standard_period.capitalize}").new(date)
       end
 
-      define_method "this_#{period}" do
-        Object.const_get("ActivePeriod::#{period.capitalize}").new(env_time.now)
+      define_method "this_#{standard_period}" do
+        Object.const_get("ActivePeriod::#{standard_period.capitalize}").new(env_time.now)
       end
 
-      define_method "next_#{period}" do
-        date = env_time.now.send(period == :day ? 'tomorrow' : "next_#{period}")
-        Object.const_get("ActivePeriod::#{period.capitalize}").new(date)
+      define_method "next_#{standard_period}" do
+        date = env_time.now.send(standard_period == :day ? 'tomorrow' : "next_#{standard_period}")
+        Object.const_get("ActivePeriod::#{standard_period.capitalize}").new(date)
       end
 
-      define_method period.to_s do |range|
-        Object.const_get("ActivePeriod::#{period.capitalize}").new(range)
+      define_method standard_period.to_s do |range|
+        Object.const_get("ActivePeriod::#{standard_period.capitalize}").new(range)
       end
     end
 
