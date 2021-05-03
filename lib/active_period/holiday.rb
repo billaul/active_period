@@ -10,27 +10,32 @@ class ActivePeriod::Holiday < ActivePeriod::Day
   #   @return [<Symbol>] regions where the Holiday occure
   attr_reader :regions
 
+  # @!attribute [r] options
+  #   @return [Array] The array of options for Holidays.on
+  attr_reader :options
 
   # @param date [...] A valid param for Period.day(...)
   # @param name [String] The name of the Holiday
   # @param regions [<Symbol>] region where the Holiday occure
+  # @param options [...] The array of options for Holidays.on
   # @return [Type] ActivePeriod::Holiday
   # @raise RuntimeError if the gem "holidays" is not included
-  def initialize(date: , name:, regions: )
+  def initialize(date: , name:, regions: , options: )
     raise I18n.t(:gem_require, scope: %i[active_period holiday_period]) unless Object.const_defined?('Holidays')
     super(date)
 
     @name = name
     @regions = regions
+    @options = options
   end
 
   def next
-    raise NotImplementedError
+    Period.new(beginning+1.day..).holidays(options).first
   end
   alias succ next
 
   def prev
-    raise NotImplementedError
+    Period.new(...ending).holidays(options).last
   end
 
   def _period
@@ -62,7 +67,7 @@ class ActivePeriod::Holiday < ActivePeriod::Day
   end
 
   def i18n(&block)
-    return yield(from, to) if block.present?
+    return yield(self) if block.present?
 
     I18n.t(:default_format,
            scope:   i18n_scope,
@@ -72,6 +77,7 @@ class ActivePeriod::Holiday < ActivePeriod::Day
            month:   I18n.l(from, format: '%B').capitalize,
            year:    from.year)
   end
+  alias inspect i18n
 
   def i18n_scope
     [:active_period, :holiday_period]

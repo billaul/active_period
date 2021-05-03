@@ -1,7 +1,7 @@
-# ActivePeriod 
-[![Gem Version](https://badge.fury.io/rb/active_period.svg)](https://badge.fury.io/rb/active_period) 
-[![Code Climate](https://codeclimate.com/github/billaul/period.svg)](https://codeclimate.com/github/billaul/period) 
-[![Inline docs](http://inch-ci.org/github/billaul/period.svg)](http://inch-ci.org/github/billaul/period) 
+# ActivePeriod
+[![Gem Version](https://badge.fury.io/rb/active_period.svg)](https://badge.fury.io/rb/active_period)
+[![Code Climate](https://codeclimate.com/github/billaul/period.svg)](https://codeclimate.com/github/billaul/period)
+[![Inline docs](http://inch-ci.org/github/billaul/period.svg)](http://inch-ci.org/github/billaul/period)
 [![RubyGems](http://img.shields.io/gem/dt/active_period.svg?style=flat)](http://rubygems.org/gems/active_period)
 
 ActivePeriod aims to simplify Time-range manipulation.
@@ -319,6 +319,39 @@ Also a **StandardPeriod** and a **FreePeriod** covering the same range of time, 
 Time zone are supported
 If you change the global `Time.zone` of your app
 If your Period [begin in a time zone and end in another](https://en.wikipedia.org/wiki/Daylight_saving_time), you have nothing to do
+
+## Holidays
+
+`ActivePeriod` include an optional support of the [gem holidays](https://github.com/holidays/holidays)      
+If your project include this gem you can use the power of `.holidays` and `.holiday?`
+
+`.holiday?` and `.holidays` take the same params as `Holidays.on` except the first one        
+`Holidays.on(Date.civil(2008, 4, 25), :au)` become `Period.day('24/04/2008').holidays(:au)` or `Period.day('24/04/2008').holiday?(:au)`
+
+```ruby
+require 'holidays'
+# Get all worldwide holidays in the current month
+Period.this_month.holidays
+
+# Get all US holidays in the current month
+Period.this_month.holidays(:us)
+
+# Get all US and CA holidays in the current month
+Period.this_month.holidays(:us, :ca)
+
+# First up coming `FR` holiday
+holiday = Period.new(Time.now..).holidays(:fr).first
+# return the next holiday within the same options of the original `.holidays` collection
+holiday.next
+# return the previous holiday within the same options of the original `.holidays` collection
+holiday.prev
+```
+
+:warning: If you call a `holidays` related method without the [gem holidays](https://github.com/holidays/holidays) in your project you will raise a `RuntimeError`
+```ruby
+Period.this_month.holidays
+#=> RuntimeError (The gem "holidays" is needed for this feature to work)
+```
 
 ## Planned updates
 

@@ -8,7 +8,7 @@ module ActivePeriod
       def enumerator
         Enumerator.new do |yielder|
           current = klass.new(period.begin)
-          while current.end <= period.end || period.include?(current)
+          while current.calculated_end <= period.calculated_end || period.include?(current)
             yielder << current if period.include?(current)
             current = current.next
           end
@@ -19,7 +19,7 @@ module ActivePeriod
 
       def reverse_enumerator
         Enumerator.new do |yielder|
-          current = klass.new(period.end)
+          current = klass.new(period.calculated_end)
           while current.begin <= period.begin || period.include?(current)
             yielder << current if period.include?(current)
             current = current.prev

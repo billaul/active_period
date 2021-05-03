@@ -23,7 +23,7 @@ module ActivePeriod
         raise RangeError.new "cannot get the last element of endless range" if period.endless?
 
         Enumerator.new do |yielder|
-          current = klass.new(period.end)
+          current = klass.new(period.calculated_end)
           while period.begin.nil? || period.include?(current.begin) || period.include?(current.calculated_end)
             yielder << current
             current = current.prev
