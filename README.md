@@ -347,7 +347,8 @@ holiday.next
 holiday.prev
 ```
 
-:warning: If you call a `holidays` related method without the [gem holidays](https://github.com/holidays/holidays) in your project you will raise a `RuntimeError`
+:warning:  If you call a `holidays` related method without the [gem holidays](https://github.com/holidays/holidays) in your project    
+You will raise a `RuntimeError`
 ```ruby
 Period.this_month.holidays
 #=> RuntimeError (The gem "holidays" is needed for this feature to work)
