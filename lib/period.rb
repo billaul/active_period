@@ -1,16 +1,25 @@
+# This module is intended to hide the complexity of ActivePeriod
+# And permit the user to write less and doing more
 module Period
+
+  # Shorthand to ActivePeriod::FreePeriod.new
   def self.new(*args)
     ActivePeriod::FreePeriod.new(*args)
   end
 
+  # Shorthand ActivePeriod::FreePeriod.new(range, allow_beginless: false, allow_endless: false)
   def self.bounded(range)
     ActivePeriod::FreePeriod.new(range, allow_beginless: false, allow_endless: false)
   end
 
+  # env_time provide a Fallback if the project dont specify any Time.zone
   def self.env_time
     (Time.zone || Time)
   end
 
+  # Dynamic definition of `.(last|this|next)_(day|week|month|quarter|year)`
+  # and `.yesterday` `.today` `.tomorrow`
+  # TODO implement (last|next)_holiday
   class << self
     %i[day week month quarter year].each do |period|
       define_method "last_#{period}" do

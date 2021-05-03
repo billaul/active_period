@@ -23,6 +23,8 @@ require_relative 'active_period/year.rb'
 require_relative 'active_period/holiday.rb'
 require_relative 'period.rb'
 
+# TODO find a way to cleanup this require_relative mess >< 
+
 module ActivePeriod
 
 end
