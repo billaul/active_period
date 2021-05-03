@@ -6,9 +6,9 @@ module ActivePeriod
     module Holidays
       include ActivePeriod::HasMany
 
-      def holidays(...)
+      def holidays(*args, &block)
         raise I18n.t(:gem_require, scope: %i[active_period holiday_period]) unless Object.const_defined?('Holidays')
-        ActivePeriod::Collection::HolidayPeriod.new(ActivePeriod::Holiday, self, ...)
+        ActivePeriod::Collection::HolidayPeriod.new(ActivePeriod::Holiday, self, *args, &block)
       end
     end
   end
