@@ -51,6 +51,9 @@ Period.new(..Time.now).months.reverse_each # => Enumerable
 # Write a date for me (I18n supported)
 Period.new('20/01/2017'...'20/01/2021').to_s
 => "From the 20 January 2017 to the 20 January 2021 excluded"
+
+# Get all US holidays in the next week (see holiday's section below)
+Period.next_week.holidays(:us)
 ```
 
 ## Detailed view
