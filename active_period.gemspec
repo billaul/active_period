@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'Manage time ranges without brain damage.'
   # spec.description   = "Period.new('01/01/2020'..Time.now)"
-  spec.homepage      = "https://github.com/billaul/period"
+  spec.homepage      = "https://github.com/billaul/active_period"
   spec.license       = 'MIT'
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
