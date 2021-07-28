@@ -357,9 +357,10 @@ Period.this_month.holidays
 #=> RuntimeError (The gem "holidays" is needed for this feature to work)
 ```
 
-## Planned updates
+## Planned updates & Idea
 
 - [ ] ActiveRecord Serializer (maybe)
+- [ ] Dedicated Exception for each possible error
 
 ## Bug reports
 
