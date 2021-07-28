@@ -1,26 +1,68 @@
 PATH
   remote: .
   specs:
-    active_period (6.2.1)
-      activesupport (~> 5)
+    active_period (6.3.0)
+      activesupport (~> 6, >= 5)
       i18n (~> 1)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (5.2.5)
+    activesupport (6.0.0)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
-    concurrent-ruby (1.1.8)
+      zeitwerk (~> 2.1, >= 2.1.8)
+    builder (3.2.4)
+    concurrent-ruby (1.1.9)
+    cucumber (7.0.0)
+      builder (~> 3.2, >= 3.2.4)
+      cucumber-core (~> 10.0, >= 10.0.1)
+      cucumber-create-meta (~> 6.0, >= 6.0.1)
+      cucumber-cucumber-expressions (~> 12.1, >= 12.1.1)
+      cucumber-gherkin (~> 20.0, >= 20.0.1)
+      cucumber-html-formatter (~> 16.0, >= 16.0.1)
+      cucumber-messages (~> 17.0, >= 17.0.1)
+      cucumber-wire (~> 6.0, >= 6.0.1)
+      diff-lcs (~> 1.4, >= 1.4.4)
+      mime-types (~> 3.3, >= 3.3.1)
+      multi_test (~> 0.1, >= 0.1.2)
+      sys-uname (~> 1.2, >= 1.2.2)
+    cucumber-core (10.0.1)
+      cucumber-gherkin (~> 20.0, >= 20.0.1)
+      cucumber-messages (~> 17.0, >= 17.0.1)
+      cucumber-tag-expressions (~> 3.0, >= 3.0.1)
+    cucumber-create-meta (6.0.1)
+      cucumber-messages (~> 17.0, >= 17.0.1)
+      sys-uname (~> 1.2, >= 1.2.2)
+    cucumber-cucumber-expressions (12.1.1)
+    cucumber-gherkin (20.0.1)
+      cucumber-messages (~> 17.0, >= 17.0.1)
+    cucumber-html-formatter (16.0.1)
+      cucumber-messages (~> 17.0, >= 17.0.1)
+    cucumber-messages (17.0.1)
+    cucumber-tag-expressions (3.0.1)
+    cucumber-wire (6.0.1)
+      cucumber-core (~> 10.0, >= 10.0.1)
+      cucumber-cucumber-expressions (~> 12.1, >= 12.1.1)
+      cucumber-messages (~> 17.0, >= 17.0.1)
+    diff-lcs (1.4.4)
+    ffi (1.15.3)
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
+    mime-types (3.3.1)
+      mime-types-data (~> 3.2015)
+    mime-types-data (3.2021.0704)
     minitest (5.14.4)
+    multi_test (0.1.2)
     rake (10.5.0)
+    sys-uname (1.2.2)
+      ffi (~> 1.1)
     thread_safe (0.3.6)
     tzinfo (1.2.9)
       thread_safe (~> 0.1)
+    zeitwerk (2.4.2)
 
 PLATFORMS
   ruby
@@ -28,6 +70,7 @@ PLATFORMS
 DEPENDENCIES
   active_period!
   bundler (~> 2.0)
+  cucumber
   rake (~> 10.0)
 
 BUNDLED WITH

@@ -38,9 +38,10 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = '>= 2.7'
 
-  spec.add_runtime_dependency 'activesupport', '~> 5'
+  spec.add_runtime_dependency 'activesupport', '>= 5', '~> 6'
   spec.add_runtime_dependency 'i18n', '~> 1'
-  
+
   spec.add_development_dependency 'bundler', '~> 2.0'
   spec.add_development_dependency 'rake', '~> 10.0'
+  spec.add_development_dependency 'cucumber'
 end
