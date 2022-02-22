@@ -3,8 +3,8 @@
 module Period
 
   # Shorthand to ActivePeriod::FreePeriod.new
-  def self.new(*args)
-    ActivePeriod::FreePeriod.new(*args)
+  def self.new(range, allow_beginless: true, allow_endless: true)
+    ActivePeriod::FreePeriod.new(range, allow_beginless: allow_beginless, allow_endless: allow_endless)
   end
 
   # Shorthand ActivePeriod::FreePeriod.new(range, allow_beginless: false, allow_endless: false)
