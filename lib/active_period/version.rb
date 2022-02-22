@@ -1,5 +1,5 @@
 module ActivePeriod
 
-  VERSION = '6.3.1'.freeze
+  VERSION = '7.0.0'.freeze
 
 end
