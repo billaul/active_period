@@ -209,9 +209,9 @@ Period.this_year.months.second.weeks.last.days.third
 
 ## Period Combination with `&` and `|`
 
-You can use `&` to combine overlapping periods
-And `|` to combine overlapping and tail to head periods.
-If the given periods cannot combine, then `nil` will be return  
+You can use `&` to combine overlapping periods     
+And `|` to combine overlapping and tail to head periods     
+If the given periods cannot combine, then `nil` will be return       
 The period we take the ending date from, determine if the ending date is included or excluded
 
 #### Example for `&`
