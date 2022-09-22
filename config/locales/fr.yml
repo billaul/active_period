@@ -5,7 +5,7 @@ fr:
     comparable:
       incomparable_error:               Les arguments ne sont pas comparables
     collection:
-      param_period_must_be_a_period:          Le paramètre doit hériter de la class Period
+      param_period_must_be_a_period:    Le paramètre doit hériter de la class Period
     period:
       base_class_is_abstract:           Period est une class abstraite qui ne doit pas être utiliser directement
       begin_date_is_invalid:            Date de début invalide

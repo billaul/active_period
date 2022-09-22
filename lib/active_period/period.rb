@@ -9,7 +9,7 @@ class ActivePeriod::Period < Range
   # @param range [Range] A valid range
   # @param allow_beginless [Boolean] Is it allow to creat a beginless range
   # @param allow_endless [Boolean] Is it allow to creat an endless range
-  # @return [self] A new instance of ActivePeriod::FreePeriod
+  # @return [self] A new instance of ActivePeriod::Period
   # @raise ArgumentError if the params range is not a Range
   # @raise ArgumentError if the params range is invalid
   def initialize(range, allow_beginless: true, allow_endless: true)
@@ -25,8 +25,6 @@ class ActivePeriod::Period < Range
     raise ::ArgumentError, I18n.t(:end_date_is_invalid, scope: %i[active_period period]) if !allow_endless && to.nil?
     to = to.try(:end_of_day) || to
 
-    # raise ::ArgumentError, I18n.t(:endless_excluded_end_is_forbiden, scope: %i[active_period period]) if to.nil? && range.exclude_end?
-    # to = to.prev_day if range.exclude_end?
     if range.exclude_end? && from && to && from.to_date == to.to_date
       raise ::ArgumentError, I18n.t(:start_is_equal_to_end_excluded, scope: %i[active_period period])
     end
@@ -70,16 +68,76 @@ class ActivePeriod::Period < Range
     raise NotImplementedError
   end
 
-  # @param other [ActivePeriod::FreePeriod] Any kind of ActivePeriod::FreePeriod object
+  # @param other [ActivePeriod::Period, ActiveSupport::Duration, Numeric] Any kind of ActivePeriod::Period, ActiveSupport::Duration or Numeric (in seconds)
   # @return [Boolean] true if period are equals, false otherwise
-  # @raise ArgumentError if params other is not a ActivePeriod::FreePeriod of some kind
+  # @raise ArgumentError if params other is not a ActivePeriod::Period of some kind
   def ==(other)
     if other.class.ancestors.include?(ActivePeriod::Period)
       from == other.from && self.calculated_end == other.calculated_end
-    elsif other.is_a?(ActiveSupport::Duration) || other.is_a?(Numeric)
+    elsif other.is_a?(ActiveSupport::Duration)
       super(other)
+    elsif other.is_a?(Numeric)
+      super(other.seconds)
     else
       raise ArgumentError
+    end
+  end
+
+  # @param other [ActivePeriod::Period] Any kind of ActivePeriod::Period object
+  # @return [Boolean] true if period and class are the same, false otherwise
+  # @raise ArgumentError if params other is not a ActivePeriod::Period of some kind
+  def ===(other)
+    self == other && self.class == other.class
+  end
+
+  # @param other [ActivePeriod::Period] Any kind of ActivePeriod::Period object
+  # @return [ActivePeriod::Period, nil] Any kind of ActivePeriod::FreePeriod if period overlap, nil otherwise
+  # @raise ArgumentError if params other is not a ActivePeriod::Period of some kind
+  def &(other)
+    raise ArgumentError, I18n.t(:incomparable_error, scope: %i[active_period comparable]) unless other.class.ancestors.include?(ActivePeriod::Period)
+
+    # self            9------12
+    # other  1-----------10
+    if self.begin.in?(other) && !calculated_end.in?(other)
+      Period.new( Range.new(self.begin, other.to, other.exclude_end?) )
+    # self    1-----------10
+    # other            9------12
+    elsif !self.begin.in?(other) && calculated_end.in?(other)
+      Period.new( Range.new(other.begin, to, exclude_end?) )
+    # self      5-----8
+    # other  1-----------10
+    elsif other.include?(self)
+      other
+    # self   1-----------10
+    # other      5-----8
+    elsif self.include?(other)
+      self
+    else
+      nil
+    end
+  end
+
+  # @param other [ActivePeriod::Period] Any kind of ActivePeriod::Period object
+  # @return [ActivePeriod::Period, nil] Any kind of ActivePeriod::FreePeriod if period overlap, nil otherwise
+  # @raise ArgumentError if params other is not a ActivePeriod::Period of some kind
+  def |(other)
+    raise ArgumentError, I18n.t(:incomparable_error, scope: %i[active_period comparable]) unless other.class.ancestors.include?(ActivePeriod::Period)
+
+    # overlapping or tail to head
+    if self.begin.in?(other) || self.calculated_end.in?(other) || (
+        ((self.calculated_end+1.day).beginning_of_day == other.from) ^
+        ((other.calculated_end+1.day).beginning_of_day == self.from)
+      )
+      Period.new(
+        Range.new(
+          [self.begin, other.begin].min,
+          [self.to, other.to].max,
+          self.calculated_end > other.calculated_end ? self.exclude_end? : other.exclude_end?
+        )
+      )
+    # no overlapping
+    else
+      nil
     end
   end
 

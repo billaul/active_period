@@ -147,4 +147,76 @@ class TestPeriod < Minitest::Test
                  Period.new(0.year.from_now.beginning_of_year..10.years.from_now.end_of_year)
   end
 
+  def test_operator_equal
+    free_month      = Period.new('01/01/2021'..'31/01/2021')
+    week            = Period.week('01/01/2021')
+    standard_month  = Period.month('01/01/2021')
+
+    assert free_month == standard_month
+    assert free_month == 31.days
+    assert free_month == 2678400
+
+    assert free_month != week
+    assert standard_month != week
+
+    assert_raises ArgumentError do
+      free_month == nil
+    end
+  end
+
+  def test_operator_triple_equal
+    free_month      = Period.new('01/01/2021'..'31/01/2021')
+    standard_month  = Period.month('01/01/2021')
+
+    assert !( free_month === standard_month )
+    assert !( free_month === 31.days )
+    assert !( free_month === 2678400 )
+
+    assert !( free_month === standard_month )
+
+    assert free_month === free_month
+    assert standard_month === standard_month
+  end
+
+  def test_operator_and
+    first  = Period.new('01/01/2021'...'20/01/2021')
+    second = Period.new('10/01/2021'..'31/01/2021')
+
+    assert first & second == Period.new('10/01/2021'...'20/01/2021')
+
+    month = Period.month('01/01/2021')
+    week  = Period.week('01/01/2021')
+
+    assert month & week == Period.new('01/01/2021'..'03/01/2021')
+
+    assert_equal (Period['01/01/2021'..'20/01/2021'] & Period['10/01/2021'...'30/01/2021']).to_s,
+                  'From the 10 January 2021 to the 20 January 2021 included'
+
+    assert_equal (Period['01/01/2021'...'20/01/2021'] & Period['10/01/2021'..'30/01/2021']).to_s,
+                  'From the 10 January 2021 to the 20 January 2021 excluded'
+  end
+
+  def test_operator_or
+    first  = Period.new('01/01/2021'..'20/01/2021')
+    second = Period.new('10/01/2021'..'31/01/2021')
+
+    assert first | second == Period.month('01/01/2021')
+
+    month = Period.month('01/01/2021')
+    week  = Period.week('01/01/2021')
+
+    assert month | week == Period.new('28/12/2020'..'31/01/2021')
+
+    assert_equal (Period['01/01/2021'..'20/01/2021'] | Period['10/01/2021'...'30/01/2021']).to_s,
+                  'From the 01 January 2021 to the 30 January 2021 excluded'
+
+    assert_equal (Period['01/01/2021'...'20/01/2021'] | Period['10/01/2021'..'30/01/2021']).to_s,
+                  'From the 01 January 2021 to the 30 January 2021 included'
+
+    assert Period.month('01/01/2021') | Period.month('01/02/2021') | Period.month('01/03/2021') == Period.quarter('01/01/2021')
+
+    assert Period['01/01/2021'..'09/01/2021']  | Period['10/01/2021'..'20/01/2021'] == Period['01/01/2021'..'20/01/2021']
+    assert Period['01/01/2021'...'09/01/2021'] | Period['10/01/2021'..'20/01/2021'] == nil
+  end
+
 end

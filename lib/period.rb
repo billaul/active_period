@@ -12,6 +12,11 @@ module Period
     ActivePeriod::FreePeriod.new(range, allow_beginless: false, allow_endless: false)
   end
 
+  # Shorthand to Period.new
+  def self.[](range)
+    Period.new(range)
+  end
+
   # env_time provide a Fallback if the project dont specify any Time.zone
   def self.env_time
     (Time.zone || Time)

@@ -16,6 +16,7 @@ class TestFreePeriod < Minitest::Test
       Period.new 42
     end
     assert_kind_of ActivePeriod::FreePeriod, Period.new(42..451)
+    assert_kind_of ActivePeriod::FreePeriod, Period[42..451]
 
     assert_raises ArgumentError do
       Period.new '01/01/2021'..'10/10/2020'

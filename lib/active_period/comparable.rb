@@ -16,12 +16,14 @@ module ActivePeriod
     end
 
     def <=>(other)
+      raise ArgumentError, I18n.t(:incomparable_error, scope: %i[active_period comparable]) unless other.is_a?(ActiveSupport::Duration)
+
       if other.is_a?(ActiveSupport::Duration) || other.is_a?(Numeric)
         to_i <=> other.to_i
       elsif self.class != other.class
         raise ArgumentError, I18n.t(:incomparable_error, scope: %i[active_period comparable])
       else
-        (from <=> other)
+        (self.begin <=> other)
       end
     end
 

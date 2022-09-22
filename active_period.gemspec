@@ -38,7 +38,7 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = '>= 2.7'
 
-  spec.add_runtime_dependency 'activesupport', '>= 5', '~> 7'
+  spec.add_runtime_dependency 'activesupport', '>= 5', '<= 7'
   spec.add_runtime_dependency 'i18n', '~> 1'
 
   spec.add_development_dependency 'bundler', '~> 2.0'

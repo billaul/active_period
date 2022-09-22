@@ -82,6 +82,9 @@ Period.new(params[:start_date]..params[:end_date])
 
 # or from a range
 ('01/01/2000'...'01/02/2000').to_period
+
+# you can also use [] if .new is too long for you
+Period['01/01/2000'...'01/02/2000']
 ```
 
 **Note** : `to_period` will always return a **FreePeriod**
@@ -202,6 +205,41 @@ These methods return a **StandardPeriod** who include the current period
 ```ruby
 # Get the third day, of the last week, of the second month, of the current year
 Period.this_year.months.second.weeks.last.days.third
+```
+
+## Period Combination with `&` and `|`
+
+You can use `&` to combine overlapping periods
+And `|` to combine overlapping and tail to head periods.
+If the given periods cannot combine, then `nil` will be return  
+The period we take the ending date from, determine if the ending date is included or excluded
+
+#### Example for `&`
+```ruby
+# Overlapping periods
+(Period['01/01/2021'..'20/01/2021'] & Period['10/01/2021'...'30/01/2021']).to_s
+=> "From the 10 January 2021 to the 20 January 2021 included"
+
+# Theses period cannot combine
+Period.this_month & Period.next_month
+=> nil
+```
+
+#### Example for `|`
+```ruby
+# Overlapping periods
+(Period['01/01/2021'..'20/01/2021'] | Period['10/01/2021'...'30/01/2021']).to_s
+=> "From the 01 January 2021 to the 30 January 2021 excluded"
+
+# Example with tail to head
+(Period.this_month | Period.next_month).to_s
+=> "From the 01 September 2022 to the 31 October 2022 included"
+(Period['01/01/2021'..'09/01/2021']  | Period['10/01/2021'..'20/01/2021']).to_s
+=> "From the 01 January 2021 to the 20 January 2021 included"
+
+# Theses period cannot combine
+Period['01/01/2021'...'09/01/2021'] | Period['10/01/2021'..'20/01/2021']
+=> nil
 ```
 
 ## Boundless Period
