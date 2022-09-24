@@ -50,32 +50,57 @@ module Period
     alias tomorrow next_day
     alias today this_day
 
-    # Experimental non-documented feature
+    LAST_OR_NEXT_REGEX = /^(:?last|next)_(\d+)_(day|week|month|quarter|year)s?(_from_now)?$/
+    LAST_AND_NEXT_REGEX = /^last_(\d+)_(day|week|month|quarter|year)s?_to_next_(\d+)_(day|week|month|quarter|year)s?$/
+
+    # Experimenta l non-documented feature
     # Inpired form ActiveRecord dynamic find_by_x like User.find_by_name
     # Example: Period.last_3_weeks_from_now == Period.mew(2.weeks.ago.beginning_of_week..Time.now.end_of_week)
     # Note : Maybe it should return a collection of StandardPeriod
     def method_missing(method_name, *arguments, &block)
-      super unless method_name.match?(/(last|next)_\d+_(day|week|month|quarter|year)s?(_from_now)?/)
-      last_next, count, klass = method_name.to_s.split('_')
+      if method_name.match? LAST_OR_NEXT_REGEX
+        missing_last_or_next(method_name)
+      elsif method_name.match? LAST_AND_NEXT_REGEX
+        missing_last_and_next(method_name)
+      else
+        super
+      end
+    end
+
+    def missing_last_or_next(method_name)
+      last_next, count, klass, from_now = method_name.to_s.scan(LAST_OR_NEXT_REGEX).flatten
       klass = klass.singularize
 
       case last_next
       when 'last'
         from = count.to_i.send(klass).ago.send("beginning_of_#{klass}")
         to = env_time.now
-        to -= 1.send(klass) unless method_name.match?(/from_now$/)
+        to -= 1.send(klass) unless from_now
         to = to.send("end_of_#{klass}")
       when 'next'
         from = env_time.now
-        from += 1.send(klass) unless method_name.match?(/from_now$/)
+        from += 1.send(klass) unless from_now
         from = from.send("beginning_of_#{klass}")
         to = count.to_i.send(klass).from_now.send("end_of_#{klass}")
       end
       self.new(from..to)
     end
 
+    def missing_last_and_next(method_name)
+      last_count, last_klass, next_count, next_klass = method_name.to_s.scan(LAST_AND_NEXT_REGEX).flatten
+      last_klass = last_klass.singularize
+      next_klass = next_klass.singularize
+
+      from = last_count.to_i.send(last_klass).ago.send("beginning_of_#{last_klass}")
+      to = next_count.to_i.send(next_klass).from_now.send("end_of_#{next_klass}")
+
+      self.new(from..to)
+    end
+
     def respond_to_missing?(method_name, include_private = false)
-      method_name.match?(/(last|next)_\d+_(day|week|month|quarter|year)s?(_from_now)?/) || super
+      method_name.match?(/(last|next)_\d+_(day|week|month|quarter|year)s?(_from_now)?/) ||
+      method_name.match?(/(last)_\d+_(day|week|month|quarter|year)s?_to_next_\d+_(day|week|month|quarter|year)s?/ ) ||
+      super
     end
   end
 end

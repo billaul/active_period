@@ -3,6 +3,8 @@ require 'active_period'
 
 # Testing
 # /(last|next)_\d+_(day|week|month|quarter|year)s?(_from_now)?/
+# AND
+# /^last_(\d+)_(day|week|month|quarter|year)s?_to_next_(\d+)_(day|week|month|quarter|year)s?$/
 class TestPeriodMethodMissing < Minitest::Test
   # /(last|next)_\d+_(day)s?(_from_now)?/
   def test_last_x_day
@@ -210,6 +212,16 @@ class TestPeriodMethodMissing < Minitest::Test
   def test_next_x_years_from_now
     assert_equal Period.next_10_years_from_now,
                  Period[Time.now.beginning_of_year .. 10.year.from_now.end_of_year]
+  end
+
+  def text_last_10_day_to_next_3_week
+    assert_equal Period.last_10_day_to_next_3_week,
+                 Period.last_10_day_from_now | Period.next_3_week_from_now
+  end
+
+  def text_last_2_quarter_to_next_5_month
+    assert_equal Period.last_2_quarter_to_next_5_month
+                 Period.last_2_quarter_from_now | Period.next_5_month_from_now
   end
 
 end
