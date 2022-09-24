@@ -1,19 +1,18 @@
 PATH
   remote: .
   specs:
-    active_period (7.1.0)
-      activesupport (>= 5, <= 7)
+    active_period (7.1.1)
+      activesupport (>= 5, < 8)
       i18n (~> 1)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (6.1.4)
+    activesupport (7.0.4)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
-      zeitwerk (~> 2.3)
     builder (3.2.4)
     concurrent-ruby (1.1.10)
     cucumber (7.0.0)
@@ -61,7 +60,6 @@ GEM
       ffi (~> 1.1)
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
-    zeitwerk (2.6.0)
 
 PLATFORMS
   ruby
