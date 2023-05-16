@@ -15,8 +15,8 @@ fr:
       param_must_be_a_range:            Le paramètre doit hériter de la class Range
     free_period:
       default_format:                   Du %{from} au %{to} %{ending}
-      beginless_format:                 Jusqu'au %{from} %{ending}
-      endless_format:                   Depuis le %{to}
+      beginless_format:                 Jusqu'au %{to} %{ending}
+      endless_format:                   Depuis le %{from}
       boundless_format:                 Sans limite de temps
     standard_period:
       base_class_is_abstract:     StandardPeriod est une class abstraite qui ne doit pas être utiliser directement
