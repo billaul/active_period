@@ -134,7 +134,7 @@ Period.week('10/02/2000') + 67.day
 **StandardPeriod** also respond to `.next` and `.prev`
 ```ruby
 Period.month('01/01/2000').next.next.next
-# Return the month of April 2020
+# Return the month of April 2000
 ```
 
 You can quickly access convenient periods of time with `.(last|this|next)_(day|week|month|quarter|year)` and `.yesterday` `.today` `.tomorrow`
@@ -240,6 +240,27 @@ Period.this_month & Period.next_month
 # Theses period cannot combine
 Period['01/01/2021'...'09/01/2021'] | Period['10/01/2021'..'20/01/2021']
 => nil
+```
+
+## Period clamping with `clamp_on`
+
+You can use `clamp_on` to clamp a `Period`, a date or a range of dates, within a `Period`.
+If you user `clamp_on` on a range of dates, the return value will also be a range of dates, this is to preserve hours/minutes/second precision
+:warning: The classic `clamp` apply the param to the caller. It's `42.clamp(1..10) -> 10` **and this don't exist** `(1..10).clamp(42)`      
+`clamp_on` reverse this logic, and apply the caller to the params.     
+This choice has been made to avoid a monkey patch on `clamp`
+:warning: If you `clamp_on` a `range` that don't overlap with the caller, the return value is `nil`
+
+```ruby
+Period.today.clamp_on(Period.this_week) 
+=> Period.today
+
+Period.today.clamp_on(Period.last_week)
+=> nil
+
+Period.today.clamp_on(3.from_now)
+=> # 3.from_now or today ending's time
+
 ```
 
 ## Boundless Period

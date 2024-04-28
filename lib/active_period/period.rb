@@ -107,11 +107,11 @@ class ActivePeriod::Period < Range
     # self      5-----8
     # other  1-----------10
     elsif other.include?(self)
-      other
+      self
     # self   1-----------10
     # other      5-----8
     elsif self.include?(other)
-      self
+      other
     else
       nil
     end

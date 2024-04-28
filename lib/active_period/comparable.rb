@@ -10,21 +10,75 @@ module ActivePeriod
         include_period?(ActivePeriod::Day.new(other))
       when ActivePeriod::Period
         include_period?(other)
+      when Range
+        include?(other.first) && include?(other.last)
       else
         raise ArgumentError, I18n.t(:incomparable_error, scope: %i[active_period comparable])
       end
     end
 
     def <=>(other)
-      raise ArgumentError, I18n.t(:incomparable_error, scope: %i[active_period comparable]) unless other.is_a?(ActiveSupport::Duration)
-
-      if other.is_a?(ActiveSupport::Duration) || other.is_a?(Numeric)
+      case other
+      when DateTime, Time, ActiveSupport::TimeWithZone
+        if first < other && last < other
+          -1
+        elsif first > other && last > other
+          1
+        else
+          0
+        end
+      when ActiveSupport::Duration, Numeric
         to_i <=> other.to_i
-      elsif self.class != other.class
-        raise ArgumentError, I18n.t(:incomparable_error, scope: %i[active_period comparable])
       else
-        (self.begin <=> other)
+        if self.class != other.class
+          raise ArgumentError, I18n.t(:incomparable_error, scope: %i[active_period comparable])
+        else
+          (self.begin <=> other)
+        end
       end
+    end
+
+    # Reverse clamp where the `other` is clamped by `self`
+    #   If other is an ActivePeriod::Period then `clamp_on` will return an ActivePeriod::Period
+    #   If other is not an ActivePeriod::Period then `clamp_on` will return a range
+    def clamp_on(other)
+      case other
+      when DateTime, Time, ActiveSupport::TimeWithZone
+        case self <=> other
+        when -1
+          last
+        when 0
+          other
+        when 1
+          first
+        end
+      when ActivePeriod::Period
+        self & other
+      when Range
+        if (other.first > last && other.last > last) ||
+           (other.first < first && other.last < first)
+          return nil
+        end
+
+        clamped = clamp_on(other.first) .. clamp_on(other.last)
+
+        if other.is_a? ActivePeriod::Period
+          clamped.to_period
+        else
+          clamped
+        end
+      else
+        raise ArgumentError, I18n.t(:incomparable_error, scope: %i[active_period comparable])
+      end
+      #
+      # new_first = other.first < first ? first : other.first
+      # new_last = other.last > last ? last : other.last
+      #
+      # if other.is_a? ActivePeriod::Period
+      #   Period.new(new_first .. new_last)
+      # else
+      #   new_first .. new_last
+      # end
     end
 
     private
@@ -32,8 +86,6 @@ module ActivePeriod
     def include_period?(other)
       if self.class.in?([Month, Quarter, Year]) && other.is_a?(Week)
         self.include_time?(other.include_date)
-      # elsif (other.class.in?([Month, Quarter, Year]) && self.is_a?(Week)
-      #   other.include_time?(self.include_date)
       else
         self.include_time?(other.begin) && self.include_time?(other.calculated_end)
       end

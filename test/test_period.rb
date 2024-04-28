@@ -87,6 +87,11 @@ class TestPeriod < Minitest::Test
 
     assert month & week == Period.new('01/01/2021'..'03/01/2021')
 
+    week  = Period.week('05/01/2021')
+    assert month & week == week
+    assert week & month == week
+    assert month & Period.week('01/03/2021') == nil
+
     assert_equal (Period['01/01/2021'..'20/01/2021'] & Period['10/01/2021'...'30/01/2021']).to_s,
                   'From the 10 January 2021 to the 20 January 2021 included'
 
