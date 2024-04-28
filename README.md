@@ -134,7 +134,7 @@ Period.week('10/02/2000') + 67.day
 **StandardPeriod** also respond to `.next` and `.prev`
 ```ruby
 Period.month('01/01/2000').next.next.next
-# Return the month of April 2020
+# Return the month of April 2000
 ```
 
 You can quickly access convenient periods of time with `.(last|this|next)_(day|week|month|quarter|year)` and `.yesterday` `.today` `.tomorrow`
